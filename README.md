@@ -1,6 +1,6 @@
 # Intraday Direction Prediction for Taiwanese Stocks
 
-This repository supports the Fall 2026 NTU Machine Learning final project. The task is to predict whether each of 50 Taiwanese stocks will finish a trading day above its adjusted opening price. The repository contains the shared experiment infrastructure and four member workspaces. It does not yet contain trained models or measured model results.
+This repository supports the Fall 2026 NTU Machine Learning final project. The task is to predict whether each of 50 Taiwanese stocks will finish a trading day above its adjusted opening price. The repository contains the shared experiment infrastructure and four member workspaces. An XGBoost E1 runner is prepared for 鄭振慈; it has not been run, and the repository does not yet contain trained models or measured model results.
 
 The [team workflow guide](context/README.md) explains how members use the current pipeline. The [v1.1 protocol record](context/protocol-v1.1.md) preserves the original decisions and course requirements. The official [project specification](final_project.pdf) takes precedence.
 
@@ -62,7 +62,7 @@ These are 21 logical inputs, not 21 final numeric columns: one-hot encoding expa
 `shared/features.py` applies these rules once for all 100 stocks. The generated `data/processed/f0.csv` has **161,746 rows** and 22 columns: `stock_id`, `date`, and the other 20 F0 fields. It preserves rows with missing history or stale global values; it contains no `y` or target-day OHLC columns. Members load it directly with `load_f0_dataset`, then use the existing chronological fold keys to select rows. Training labels and evaluation prices come separately from the unchanged raw market data.
 
 ```text
-python -m shared.features --data-dir data --output data/processed/f0.csv
+uv run python -m shared.features --data-dir data --output data/processed/f0.csv
 ```
 
 ```python
@@ -119,15 +119,17 @@ The supplied `sample_submission.csv` is the Phase 1 template: 50 `id` rows and 8
 | `shared/preprocessing.py` | Shared E1 preprocessing |
 | `shared/evaluation.py` | Prediction-key checks, official score, accuracy, and CV score |
 | `shared/submission.py`, `sample_submission.csv` | Validated template-based submission export and the supplied Phase 1 template |
-| `members/` | Four personal experiment directories, without model assignments |
+| `members/` | Four personal experiment directories; 鄭振慈 has a prepared XGBoost E1 runner |
 | `tests/` | Shared integrity, feature, split, preprocessing, and scoring tests |
 
 ## Local checks
 
-Install the packages in `requirements.txt`, then run from the repository root:
+Use [`uv`](https://docs.astral.sh/uv/) from the repository root. Dependencies are declared in `pyproject.toml`; `uv run` creates or uses the project environment and lockfile:
 
 ```text
-python -m unittest discover -s tests -v
+uv run python -m unittest discover -s tests -v
 ```
+
+The prepared [XGBoost E1 runner](members/鄭振慈/README.md) has its own usage instructions. It has not been executed or used to select a model.
 
 The shared F0 CSV has been generated from the supplied historical data. Its lag rules are consistent across members; the data-quality assumptions above remain unverified externally.

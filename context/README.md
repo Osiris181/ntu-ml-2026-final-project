@@ -24,7 +24,7 @@ The [main README](../README.md) has the exact F0 formulas and public project ove
 | Stock lists | `data/info.json`: `Top100@Y` lists the 100 supplied stocks; `Top50@Y` lists the 50 stocks we must evaluate. |
 | Shared code | `shared/` builds the common F0 dataset, defines date splits and E1 preprocessing, scores predictions, and exports submission files. |
 | Shared F0 file | `data/processed/f0.csv` has one feature row for every supplied stock/date row. Regenerate it from raw data when needed; it is gitignored. |
-| Personal workspaces | One folder per member in `members/`. No models or results have been added yet. |
+| Personal workspaces | One folder per member in `members/`. 鄭振慈 has a prepared XGBoost E1 script; no models have been trained and no results have been generated yet. |
 
 The label `y` says whether adjusted close was above adjusted open on that date. It is used for training and scoring, never as a model input. The target day's prices, volume, and indicators are also excluded from input features. Our cutoff is **strictly before 09:00 Asia/Taipei on the prediction date**; the shared date-lag rules below are the team's conservative, unverified proxy for availability.
 
@@ -45,7 +45,7 @@ That is **21 logical fields**. One-hot encoding expands the two categorical fiel
 
 ## Approaches
 
-The team will compare **four meaningfully different approaches**, one primary approach per member. The candidate families discussed so far are Logistic Regression, Random Forest, boosted trees (LightGBM or XGBoost), and a multilayer perceptron. **These are candidates; the model-to-member assignments are not finalized.**
+The team will compare **four meaningfully different approaches**, one primary approach per member. 鄭振慈 has chosen the XGBoost boosted-tree approach and has a prepared E1 script. The other model-to-member assignments are not finalized. Candidate families discussed for the remaining approaches include Logistic Regression, Random Forest, and a multilayer perceptron.
 
 Each member runs two versions of their approach:
 
@@ -77,7 +77,7 @@ We use three expanding validation folds: **2020–2022 → 2023**, **2020–2023
 Members load the same F0 file directly; no member needs to implement their own historical lag rules:
 
 ```text
-python -m shared.features --data-dir data --output data/processed/f0.csv
+uv run python -m shared.features --data-dir data --output data/processed/f0.csv
 ```
 
 ```python
@@ -177,8 +177,8 @@ The team also needs to finalize model assignments. Later, live competition work 
 
 ## Quick check
 
-From the repository root, install `requirements.txt` and run:
+From the repository root, use `uv` with dependencies from `pyproject.toml`:
 
 ```text
-python -m unittest discover -s tests -v
+uv run python -m unittest discover -s tests -v
 ```

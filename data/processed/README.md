@@ -5,7 +5,7 @@
 From the repository root, rebuild it with:
 
 ```text
-python -m shared.features --data-dir data --output data/processed/f0.csv
+uv run python -m shared.features --data-dir data --output data/processed/f0.csv
 ```
 
 Load it with `shared.features.load_f0_dataset("data/processed/f0.csv")`. Select each fold's rows by `(stock_id, date)` before fitting [`BaselinePreprocessor`](../../shared/preprocessing.py) on that fold's training rows. Obtain labels and evaluation prices separately from [`data/market/`](../market/README.md).

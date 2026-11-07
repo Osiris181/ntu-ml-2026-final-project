@@ -21,7 +21,7 @@ Run these from the repository root so paths such as `data/processed/f0.csv` reso
 | Step | Shared call | Input → output |
 |---|---|---|
 | 1. Load IDs and source rows | `load_metadata("data")`, `load_market("data")` from `data_loader.py` | The 50 target IDs and 100-stock historical rows. Historical `y` is the training label; adjusted prices are used later for scoring. |
-| 2. Load features | `load_f0_dataset("data/processed/f0.csv")` from `features.py` | One F0 row per `(stock_id, date)`, with 21 logical input fields and no label. If the file is absent, run `python -m shared.features --data-dir data --output data/processed/f0.csv` once to rebuild it from source data. |
+| 2. Load features | `load_f0_dataset("data/processed/f0.csv")` from `features.py` | One F0 row per `(stock_id, date)`, with 21 logical input fields and no label. If the file is absent, run `uv run python -m shared.features --data-dir data --output data/processed/f0.csv` once to rebuild it from source data. |
 | 3. Select dates | `split_market(market, target_ids, fold)` with `fold` from `FOLDS` in `splits.py` | Training rows from all 100 stocks and evaluation rows from the 50 targets. Join each side to F0 by both keys. |
 | 4. Prepare inputs | A fresh `BaselinePreprocessor` from `preprocessing.py` for each fold | `fit_transform` on that fold's training F0 rows; `transform` on its evaluation F0 rows. `F0_FEATURES` selects the agreed inputs, excluding `date` and `y`. |
 | 5. Score predictions | `evaluate_predictions(evaluation_rows, predictions)` from `evaluation.py` | Official score, accuracy, and evaluated row count. `predictions` must contain exactly one binary `predicted_y` for every required `(stock_id, date)` key. |
