@@ -7,10 +7,10 @@ Personal experiment workspace. The chosen primary approach is **XGBoost**.
 From the repository root, with `uv` installed:
 
 ```text
-uv run python -m members.鄭振慈.train_e1
+uv run python -m members.zhenci.train_e1
 ```
 
-You can also run `uv run python members/鄭振慈/train_e1.py` from the repository root. The script resolves the shared package and its default data and results paths from the repository location, so direct file execution works too.
+You can also run `uv run python members/zhenci/train_e1.py` from the repository root. The script resolves the shared package and its default data and results paths from the repository location, so direct file execution works too.
 
 `uv run` installs the dependencies declared in `pyproject.toml` and creates a lockfile if needed. The script writes `fold_metrics.csv` (15 seed/fold rows), `validation_predictions.csv` (each prediction tagged with its seed), and `summary.json` (per-seed CV, five-seed mean and standard deviation, configuration, threshold, and package versions) under `results/zheng_xgboost_e1_five_seeds_v1/`. Those generated files are gitignored. The script refuses to overwrite an existing output directory; pass a different `--output-dir` for another run. See the [team guide](../../context/README.md) for the shared E1 inputs and outputs.
 

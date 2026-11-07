@@ -1,10 +1,10 @@
 """Run one fixed XGBoost E1 baseline for five seeds on three validation folds.
 
 Run from the repository root with:
-    uv run python -m members.鄭振慈.train_e1
+    uv run python -m members.zhenci.train_e1
 
 Direct file execution also works:
-    uv run python members/鄭振慈/train_e1.py
+    uv run python members/zhenci/train_e1.py
 
 This script does not use the Jan-May 2026 holdout, tune a configuration,
 refit a deployment model, or create a competition submission.
