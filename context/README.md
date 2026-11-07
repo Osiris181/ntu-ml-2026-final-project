@@ -88,7 +88,53 @@ f0 = load_f0_dataset("data/processed/f0.csv")
 
 `f0` contains feature columns and stock/date keys only. Join by those keys to the raw market rows for training labels and evaluation prices. Apply each fold's fitted preprocessing only after selecting that fold's rows.
 
-For example, in the first E1 fold, the shared code selects all available 2020–2022 rows from the 100 stocks for training and 2023 rows from the 50 targets for validation. Your model learns from the training features and labels, then outputs one binary prediction for every selected 2023 target row. The shared scorer checks that no required row is missing and calculates the fold's score. Repeat with fresh preprocessing and model fitting for 2024 and 2025.
+### Use the shared F0 file in E1
+
+Run the F0 generation command above if `data/processed/f0.csv` is absent. Then, from the repository root, prepare the first validation fold like this:
+
+```python
+from shared.data_loader import load_market, load_metadata
+from shared.features import load_f0_dataset
+from shared.preprocessing import BaselinePreprocessor, F0_FEATURES
+from shared.splits import FOLDS, split_market
+
+target_ids, _ = load_metadata("data")
+market = load_market("data")
+f0 = load_f0_dataset("data/processed/f0.csv")
+
+train_rows, valid_rows = split_market(market, target_ids, FOLDS[0])
+keys = ["stock_id", "date"]
+train = train_rows[keys + ["y"]].merge(
+    f0, on=keys, how="left", validate="one_to_one", indicator=True
+)
+valid = valid_rows[keys].merge(
+    f0, on=keys, how="left", validate="one_to_one", indicator=True
+)
+if not train["_merge"].eq("both").all() or not valid["_merge"].eq("both").all():
+    raise ValueError("A split row is missing from the shared F0 file")
+
+preprocessor = BaselinePreprocessor()
+X_train = preprocessor.fit_transform(train[list(F0_FEATURES)])
+X_valid = preprocessor.transform(valid[list(F0_FEATURES)])
+y_train = train["y"]
+valid_keys = valid[keys]
+```
+
+`X_train` and `y_train` go to your member model; `X_valid` is its validation input. Keep `valid_keys` with the model's predictions so the shared scorer can match every target stock/date row to `valid_rows`. The F0 CSV intentionally keeps some missing feature values: `fit_transform` learns numeric medians and scaling **only from this training fold**, while `transform` applies those fitted values to validation. Never fit the preprocessor on `valid` or on all of `f0`.
+
+Repeat with `FOLDS[1]` and `FOLDS[2]`, creating a **new** `BaselinePreprocessor` and model for each fold. The folds train on all 100 stocks and validate on the same 50 target stocks. The shared scorer checks that no required prediction is missing and calculates each fold's score.
+
+After your member-owned model has produced binary predictions for `X_valid`, attach them to the matching keys and call the shared scorer:
+
+```python
+from shared.evaluation import evaluate_predictions
+
+predictions = valid_keys.copy()
+predictions["predicted_y"] = model.predict(X_valid)  # your fitted member model
+fold_result = evaluate_predictions(valid_rows, predictions)
+```
+
+Record `fold_result["official_score"]` separately for each of `2023`, `2024`, and `2025`. Once all three folds are done, use `cv_score` from `shared.evaluation` on a dictionary of those yearly scores to compare configurations. The [shared module guide](../shared/README.md#what-members-call-in-e1) lists every common call, its input, and its output. The Jan–May 2026 `HOLDOUT` is for evaluation only after model selection.
 
 ## What goes into and comes out of a member's model
 

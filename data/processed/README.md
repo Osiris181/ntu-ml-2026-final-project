@@ -10,4 +10,6 @@ python -m shared.features --data-dir data --output data/processed/f0.csv
 
 Load it with `shared.features.load_f0_dataset("data/processed/f0.csv")`. Select each fold's rows by `(stock_id, date)` before fitting [`BaselinePreprocessor`](../../shared/preprocessing.py) on that fold's training rows. Obtain labels and evaluation prices separately from [`data/market/`](../market/README.md).
 
+The [team guide's E1 example](../../context/README.md#use-the-shared-f0-file-in-e1) shows the exact load, join, `fit_transform`, and `transform` calls. Each fold needs a fresh preprocessor. Missing numeric cells in this CSV are filled using **that fold's training medians**, not by editing or filling the shared CSV in advance.
+
 `f0.csv` is gitignored and can be regenerated; do not manually edit it. `.gitkeep` preserves this directory when the generated CSV is absent. The [project README](../../README.md#shared-f0-baseline) defines every feature.
