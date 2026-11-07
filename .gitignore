@@ -1,0 +1,18 @@
+# Derived and private inputs. Existing supplied CSVs may already be tracked.
+data/raw/*
+!data/raw/.gitkeep
+!data/raw/README.md
+data/processed/*
+!data/processed/.gitkeep
+!data/processed/README.md
+results/*
+!results/.gitkeep
+!results/README.md
+submissions/*
+!submissions/.gitkeep
+!submissions/README.md
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+*.egg-info/

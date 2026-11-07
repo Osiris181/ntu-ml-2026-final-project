@@ -1,0 +1,15 @@
+{
+  "protocol_version": "1.1",
+  "seed": 42,
+  "training_universe": "Top100@Y",
+  "evaluation_universe": "Top50@Y",
+  "feature_set": "F0",
+  "prediction_cutoff": "09:00 Asia/Taipei, strictly before",
+  "folds": [
+    {"name": "2023", "train_end": "2022-12-31", "eval_start": "2023-01-01", "eval_end": "2023-12-31"},
+    {"name": "2024", "train_end": "2023-12-31", "eval_start": "2024-01-01", "eval_end": "2024-12-31"},
+    {"name": "2025", "train_end": "2024-12-31", "eval_start": "2025-01-01", "eval_end": "2025-12-31"}
+  ],
+  "holdout": {"name": "holdout_2026_jan_may", "train_end": "2025-12-31", "eval_start": "2026-01-01", "eval_end": "2026-05-31"},
+  "selection_metric": "equal_mean_of_2023_2024_2025_official_scores"
+}
