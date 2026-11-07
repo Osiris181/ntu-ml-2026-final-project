@@ -4,6 +4,34 @@ This repository supports the Fall 2026 NTU Machine Learning final project. The t
 
 The [team workflow guide](context/README.md) explains how members use the current pipeline. The [v1.1 protocol record](context/protocol-v1.1.md) preserves the original decisions and course requirements. The official [project specification](final_project.pdf) takes precedence.
 
+## Setup and local checks
+
+Install [`uv`](https://docs.astral.sh/uv/getting-started/installation/) first. The official standalone installer commands are:
+
+Windows PowerShell:
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+macOS or Linux:
+
+```sh
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Open a new terminal if `uv` is not immediately on your `PATH`, then run these commands from the repository root:
+
+```text
+uv --version
+uv sync
+uv run python -m unittest discover -s tests -v
+```
+
+`uv sync` installs the dependencies declared in `pyproject.toml` into the project environment and creates `uv.lock` when needed. The project requires Python 3.11 or newer.
+
+The prepared [XGBoost E1 runner](members/鄭振慈/README.md) has its own usage instructions. It has not been executed or used to select a model.
+
 ## Prediction task and score
 
 One sample is a `(stock_id, date)` pair. The label is `1` when adjusted close exceeds adjusted open; otherwise it is `0`, including no change.
@@ -121,15 +149,5 @@ The supplied `sample_submission.csv` is the Phase 1 template: 50 `id` rows and 8
 | `shared/submission.py`, `sample_submission.csv` | Validated template-based submission export and the supplied Phase 1 template |
 | `members/` | Four personal experiment directories; 鄭振慈 has a prepared XGBoost E1 runner |
 | `tests/` | Shared integrity, feature, split, preprocessing, and scoring tests |
-
-## Local checks
-
-Use [`uv`](https://docs.astral.sh/uv/) from the repository root. Dependencies are declared in `pyproject.toml`; `uv run` creates or uses the project environment and lockfile:
-
-```text
-uv run python -m unittest discover -s tests -v
-```
-
-The prepared [XGBoost E1 runner](members/鄭振慈/README.md) has its own usage instructions. It has not been executed or used to select a model.
 
 The shared F0 CSV has been generated from the supplied historical data. Its lag rules are consistent across members; the data-quality assumptions above remain unverified externally.
