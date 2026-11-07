@@ -1,8 +1,9 @@
 """Refit a selected XGBoost E1 configuration and save a provisional artifact.
 
-This script never reads the Jan-May 2026 holdout labels, predicts submission
-dates, or uploads a file. The owner must explicitly choose the CV summary,
-reference seed, pre-holdout training cutoff, and new output directory.
+This script does not use the Jan-May 2026 holdout labels for training or
+selection, predict submission dates, or upload a file. Defaults use the
+selected full-sample E1 summary, a new artifact directory, the shared
+holdout training window, and reference seed 42.
 """
 
 from __future__ import annotations
@@ -14,10 +15,11 @@ import platform
 import shutil
 import sys
 import time
-from datetime import date
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_CV_SUMMARY = PROJECT_ROOT / "results/zheng_xgboost_e1_five_seeds_v1/summary.json"
+DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "results/zhenci_e1_full_pre_holdout_artifact"
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
@@ -29,7 +31,7 @@ from members.zhenci.train_e1 import join_f0
 from shared.data_loader import load_market, load_metadata
 from shared.features import load_f0_dataset
 from shared.preprocessing import F0_FEATURES, BaselinePreprocessor
-from shared.splits import E1_SEEDS
+from shared.splits import E1_SEEDS, HOLDOUT, SEED, split_market
 
 
 def _sha256(path: Path) -> str:
@@ -65,32 +67,31 @@ def _read_cv_summary(path: Path) -> dict:
     return summary
 
 
+def holdout_training_rows(market: pd.DataFrame, target_ids: list[str], all_ids: list[str]) -> pd.DataFrame:
+    """Use the shared holdout split without exposing its evaluation rows to training."""
+    rows, _ = split_market(market, target_ids, HOLDOUT)
+    if set(rows["stock_id"]) != set(all_ids):
+        raise ValueError("Holdout training window must contain all 100 supplied stocks")
+    return rows
+
+
 def save_e1(
     cv_summary_path: Path,
-    train_end: str,
     seed: int,
     output_dir: Path,
     data_dir: Path,
     f0_path: Path,
 ) -> Path:
-    """Train only on explicit pre-holdout history, then save model and preprocessing."""
+    """Train on the shared holdout's training window, then save the artifact."""
     if output_dir.exists():
         raise FileExistsError(f"Choose a new artifact directory: {output_dir}")
-    try:
-        end = date.fromisoformat(train_end)
-    except ValueError as error:
-        raise ValueError("train_end must be an ISO date") from error
-    if end.isoformat() != train_end or not date(2020, 1, 1) <= end <= date(2025, 12, 31):
-        raise ValueError("Provisional E1 training cutoff must be 2020-01-01 through 2025-12-31")
     if seed not in E1_SEEDS:
         raise ValueError(f"Seed must be one of {E1_SEEDS}")
     summary = _read_cv_summary(cv_summary_path)
 
-    _, all_ids = load_metadata(data_dir)
+    target_ids, all_ids = load_metadata(data_dir)
     market = load_market(data_dir)
-    rows = market.loc[market["date"].between("2020-01-01", train_end)].copy()
-    if rows.empty or set(rows["stock_id"]) != set(all_ids):
-        raise ValueError("Training window must contain rows from all 100 supplied stocks")
+    rows = holdout_training_rows(market, target_ids, all_ids)
     f0 = load_f0_dataset(f0_path)
     train = join_f0(rows, f0, include_label=True)
     preprocessor = BaselinePreprocessor()
@@ -133,8 +134,9 @@ def save_e1(
         "config_id": summary["config_id"],
         "cv_summary_path": str(cv_summary_path),
         "cv_summary_sha256": _sha256(cv_summary_path),
+        "training_split": HOLDOUT.name,
         "train_start": "2020-01-01",
-        "train_end": train_end,
+        "train_end": HOLDOUT.train_end,
         "training_rows": len(train),
         "training_stocks": train["stock_id"].nunique(),
         "seed": seed,
@@ -167,11 +169,13 @@ def save_e1(
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--cv-summary", type=Path, required=True)
-    parser.add_argument("--train-end", required=True, help="Explicit YYYY-MM-DD; no later than 2025-12-31")
-    parser.add_argument("--seed", type=int, choices=E1_SEEDS, required=True)
-    parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--cv-summary", type=Path, default=DEFAULT_CV_SUMMARY,
+                        help="CV summary for the selected configuration (default: full-sample E1 run)")
+    parser.add_argument("--seed", type=int, choices=E1_SEEDS, default=SEED,
+                        help=f"Prespecified reference seed (default: {SEED})")
+    parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR,
+                        help="New artifact directory (default: results/zhenci_e1_full_pre_holdout_artifact)")
     parser.add_argument("--data-dir", type=Path, default=PROJECT_ROOT / "data")
     parser.add_argument("--f0-path", type=Path, default=PROJECT_ROOT / "data/processed/f0.csv")
     args = parser.parse_args()
-    save_e1(args.cv_summary, args.train_end, args.seed, args.output_dir, args.data_dir, args.f0_path)
+    save_e1(args.cv_summary, args.seed, args.output_dir, args.data_dir, args.f0_path)

@@ -7,6 +7,7 @@ These modules provide the common, model-independent pipeline. All four members u
 | [`__init__.py`](__init__.py) | Marks `shared` as a Python package. |
 | [`data_loader.py`](data_loader.py) | Loads stock IDs, stock CSVs, and the global CSV; validates source dates, keys, and labels. |
 | [`features.py`](features.py) | Builds all 21 logical F0 fields with prior-session stock lags and strict-prior-date global alignment; generates and loads `data/processed/f0.csv`. |
+| [`updated_features.py`](updated_features.py) | Appends the separate post-August source files for feature construction and writes `data/processed/f0_with_updates.csv`; discards updated `y` and checks template-key coverage. It calls the same F0 formulas in `features.py`. |
 | [`splits.py`](splits.py) | Selects the agreed expanding validation folds, five E1 seeds, and independent holdout from actual rows. |
 | [`preprocessing.py`](preprocessing.py) | Defines F0 columns and the training-fold-fitted E1 `BaselinePreprocessor`. |
 | [`evaluation.py`](evaluation.py) | Checks complete binary predictions, calculates the official score and accuracy, and summarizes the three yearly scores across five E1 seeds. |
@@ -29,3 +30,5 @@ Run these from the repository root so paths such as `data/processed/f0.csv` reso
 | 7. Export when ready | `write_submission(predictions, template_path, output_path, target_ids)` from `submission.py` | A CSV with the exact IDs and date columns in the actual Phase 1 or Phase 2 template. This needs a complete prediction for every template cell. |
 
 `load_global("data")` in `data_loader.py` and `build_f0_dataset` in `features.py` are used when rebuilding F0; a member using the generated E1 file does not need to recalculate global alignment or stock lags. `evaluation_keys(evaluation_rows)` in `splits.py` can extract the required `(stock_id, date)` pairs. `aligned_predictions` in `evaluation.py` can inspect the validated price/prediction join. None of these modules trains a model.
+
+For the supplied September 2026 Phase 1 template, run `uv run python -m shared.updated_features` to build `data/processed/f0_with_updates.csv` from the original `data/` and the separate `updated_data_7_Nov/data/`. The builder checks that the update starts after the original history, keeps the original raw files unchanged, and rejects missing template keys inside observed stock history. It can add one future template date per stock as a row key with no target-day values; two or more future dates require actual intervening market observations. The updated CSV's `y` is not used as a training or evaluation label. See [processed features](../data/processed/README.md) for the commands and limitations.

@@ -25,6 +25,7 @@ The [main README](../README.md) has the exact F0 formulas and public project ove
 | Stock lists | `data/info.json`: `Top100@Y` lists the 100 supplied stocks; `Top50@Y` lists the 50 stocks we must evaluate. |
 | Shared code | `shared/` builds the common F0 dataset, defines date splits and E1 preprocessing, scores predictions, and exports submission files. |
 | Shared F0 file | `data/processed/f0.csv` has one feature row for every supplied stock/date row. Regenerate it from raw data when needed; it is gitignored. |
+| Later input update | `updated_data_7_Nov/data/` contains separate stock and global observations from September 1 through November 6, 2026. `shared.updated_features` builds `data/processed/f0_with_updates.csv` from both histories for September template inference. Updated labels are discarded. |
 | Personal workspaces | One folder per member in `members/` for model scripts and experiment records. |
 
 The label `y` says whether adjusted close was above adjusted open on that date. It is used for training and scoring, never as a model input. The target day's prices, volume, and indicators are also excluded from input features. Our cutoff is **strictly before 09:00 Asia/Taipei on the prediction date**; the shared date-lag rules below are the team's conservative, unverified proxy for availability.
@@ -183,7 +184,7 @@ The stock CSVs **already include** RSI, SMA, MACD, ATR, and Bollinger Band value
 
 The shared F0 file is generated under the team's conservative date policy. The CSV dates do **not** prove when market, institutional, technical, or global values were actually published; the five-day global limit and stock-session lags are not externally verified availability timestamps. The supplied technical-indicator settings also remain undocumented for reproduction on new data. See the central **Data quality and timing assumptions** section in the [main README](../README.md). Do not claim the date policy has been independently certified as leakage-free.
 
-The team also needs to finalize model assignments. Later, live competition work will need updated post-August data and the actual session template. Submission-file export is implemented, but live-data updates, trained predictions, and uploading are not.
+The team also needs to finalize model assignments. The separate November 7 input update covers the September Phase 1 template; it does not establish an automatic daily feed. Later competition sessions still need their own validated input files and actual session templates. Submission-file export is implemented; uploading is not automated.
 
 ## Quick check
 

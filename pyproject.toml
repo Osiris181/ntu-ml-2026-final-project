@@ -5,6 +5,7 @@ description = "Shared experiment pipeline for the NTU machine learning final pro
 requires-python = ">=3.11"
 dependencies = [
     "numpy",
+    "optuna>=4,<6",
     "pandas",
     "xgboost>=3,<4",
 ]

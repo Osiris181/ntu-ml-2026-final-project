@@ -12,6 +12,8 @@ import sys
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_TEMPLATE = PROJECT_ROOT / "sample_submission.csv"
+DEFAULT_OUTPUT = PROJECT_ROOT / "submissions/zhenci_e1_phase1.csv"
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
@@ -19,7 +21,7 @@ import numpy as np
 import pandas as pd
 import xgboost as xgb
 
-from members.zhenci.save_e1 import _sha256
+from members.zhenci.save_e1 import DEFAULT_OUTPUT_DIR, _sha256
 from shared.data_loader import load_metadata
 from shared.features import load_f0_dataset
 from shared.preprocessing import F0_FEATURES, BaselinePreprocessor
@@ -89,10 +91,13 @@ def export_predictions(
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--artifact-dir", type=Path, required=True)
-    parser.add_argument("--f0-path", type=Path, default=PROJECT_ROOT / "data/processed/f0.csv")
-    parser.add_argument("--template", type=Path, required=True)
-    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--artifact-dir", type=Path, default=DEFAULT_OUTPUT_DIR,
+                        help="Saved E1 artifact directory (default: full-sample E1 artifact)")
+    parser.add_argument("--f0-path", type=Path, default=PROJECT_ROOT / "data/processed/f0_with_updates.csv")
+    parser.add_argument("--template", type=Path, default=DEFAULT_TEMPLATE,
+                        help="Official submission template (default: sample_submission.csv)")
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT,
+                        help="New CSV path (default: submissions/zhenci_e1_phase1.csv)")
     parser.add_argument("--data-dir", type=Path, default=PROJECT_ROOT / "data")
     args = parser.parse_args()
     print(export_predictions(args.artifact_dir, args.f0_path, args.template, args.output, args.data_dir))
