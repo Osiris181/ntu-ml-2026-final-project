@@ -1,4 +1,4 @@
-"""Run one fixed XGBoost E1 baseline for five seeds on three validation folds.
+"""Run one fixed sampled XGBoost E1 configuration for five seeds and three folds.
 
 Run from the repository root with:
     uv run python -m members.zhenci.train_e1
@@ -36,20 +36,20 @@ from shared.splits import E1_SEEDS, FOLDS, split_market
 MEMBER = "鄭振慈"
 MODEL = "XGBoost"
 EXPERIMENT = "E1"
-CONFIG_ID = "xgboost_initial_v1"
+CONFIG_ID = "xgboost_sampling_v1"
 NUM_BOOST_ROUND = 100
 THRESHOLD = 0.5
 
-# Preserve the original model configuration; only the seed changes between runs.
-# With full row and column sampling, these runs may produce identical predictions.
+# Use the same fixed sampling rates for every fold and seed. The seed controls
+# which rows and features are sampled; all shared E1 inputs and scoring stay fixed.
 PARAMS = {
     "objective": "binary:logistic",
     "eval_metric": "logloss",
     "tree_method": "hist",
     "max_depth": 6,
     "eta": 0.3,
-    "subsample": 1.0,
-    "colsample_bytree": 1.0,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
     "lambda": 1.0,
     "alpha": 0.0,
     "nthread": 4,
@@ -175,7 +175,7 @@ if __name__ == "__main__":
     parser.add_argument("--data-dir", type=Path, default=PROJECT_ROOT / "data")
     parser.add_argument("--f0-path", type=Path, default=PROJECT_ROOT / "data/processed/f0.csv")
     parser.add_argument(
-        "--output-dir", type=Path, default=PROJECT_ROOT / "results/zheng_xgboost_e1_five_seeds_v1"
+        "--output-dir", type=Path, default=PROJECT_ROOT / "results/zheng_xgboost_e1_sampling_v1"
     )
     args = parser.parse_args()
     run(args.data_dir, args.f0_path, args.output_dir)

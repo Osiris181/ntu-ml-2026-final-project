@@ -59,6 +59,53 @@ class BaselinePreprocessor:
     def fit_transform(self, train: pd.DataFrame) -> pd.DataFrame:
         return self.fit(train).transform(train)
 
+    def to_state(self) -> dict:
+        """Return a JSON-safe snapshot of the fitted E1 transformations."""
+        if not hasattr(self, "medians_"):
+            raise RuntimeError("Fit on training rows before saving preprocessing")
+        return {
+            "format_version": 1,
+            "numeric_features": list(NUMERIC_FEATURES),
+            "categorical_features": list(CATEGORICAL_FEATURES),
+            "medians": [float(self.medians_[name]) for name in NUMERIC_FEATURES],
+            "means": [float(self.means_[name]) for name in NUMERIC_FEATURES],
+            "scales": [float(self.scales_[name]) for name in NUMERIC_FEATURES],
+            "categories": {name: list(self.categories_[name]) for name in CATEGORICAL_FEATURES},
+            "feature_names": list(self.feature_names_),
+        }
+
+    @classmethod
+    def from_state(cls, state: dict) -> "BaselinePreprocessor":
+        """Restore a frozen preprocessor and reject incompatible feature layouts."""
+        if state.get("format_version") != 1:
+            raise ValueError("Unsupported preprocessing state version")
+        if state.get("numeric_features") != list(NUMERIC_FEATURES) or state.get("categorical_features") != list(CATEGORICAL_FEATURES):
+            raise ValueError("Preprocessing feature definitions changed")
+        processor = cls()
+        for key, attr in (("medians", "medians_"), ("means", "means_"), ("scales", "scales_")):
+            values = np.asarray(state.get(key), dtype=float)
+            if values.shape != (len(NUMERIC_FEATURES),) or not np.isfinite(values).all():
+                raise ValueError(f"Invalid preprocessing {key}")
+            if key == "scales" and (values <= 0).any():
+                raise ValueError("Preprocessing scales must be positive")
+            setattr(processor, attr, pd.Series(values, index=NUMERIC_FEATURES))
+        categories = state.get("categories")
+        if not isinstance(categories, dict) or set(categories) != set(CATEGORICAL_FEATURES):
+            raise ValueError("Invalid preprocessing categories")
+        processor.categories_ = {}
+        for field in CATEGORICAL_FEATURES:
+            values = categories[field]
+            if not isinstance(values, list) or not values or any(not isinstance(value, str) for value in values) or len(values) != len(set(values)):
+                raise ValueError(f"Invalid preprocessing categories for {field}")
+            processor.categories_[field] = tuple(values)
+        processor.feature_names_ = (*NUMERIC_FEATURES, *(
+            f"{field}={value}" for field in CATEGORICAL_FEATURES
+            for value in processor.categories_[field]
+        ))
+        if state.get("feature_names") != list(processor.feature_names_):
+            raise ValueError("Preprocessing output columns changed")
+        return processor
+
     @staticmethod
     def _check_columns(frame: pd.DataFrame) -> None:
         absent = set(F0_FEATURES) - set(frame.columns)

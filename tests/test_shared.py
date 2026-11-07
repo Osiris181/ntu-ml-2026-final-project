@@ -1,5 +1,6 @@
 import unittest
 import csv
+import json
 import tempfile
 from pathlib import Path
 
@@ -151,6 +152,12 @@ class SharedTests(unittest.TestCase):
         self.assertEqual(processor.means_[NUMERIC_FEATURES[0]], 2.0)
         self.assertEqual(transformed[["stock_id=A", "stock_id=B"]].sum(axis=1).iloc[0], 0)
         self.assertIn("day_of_week=Unknown", transformed)
+        restored = BaselinePreprocessor.from_state(json.loads(json.dumps(processor.to_state())))
+        pd.testing.assert_frame_equal(transformed, restored.transform(test))
+        changed_state = processor.to_state()
+        changed_state["feature_names"] = []
+        with self.assertRaisesRegex(ValueError, "output columns changed"):
+            BaselinePreprocessor.from_state(changed_state)
         empty = train.copy()
         empty[NUMERIC_FEATURES[0]] = np.nan
         with self.assertRaisesRegex(ValueError, "All-missing"):
