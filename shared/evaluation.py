@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 
 from .data_loader import KEYS, validate_keys
+from .splits import E1_SEEDS
 
 OPEN = "etl:adj_open"
 CLOSE = "etl:adj_close"
@@ -56,10 +57,25 @@ def cv_score(scores: dict[str, float]) -> float:
     return float(values.mean())
 
 
+def e1_seed_summary(scores_by_seed: dict[int, dict[str, float]]) -> dict:
+    """Summarize five seed-level, equal-weight three-fold E1 CV scores."""
+    if set(scores_by_seed) != set(E1_SEEDS):
+        raise ValueError(f"E1 requires exactly these seeds: {E1_SEEDS}")
+    per_seed = {seed: cv_score(scores_by_seed[seed]) for seed in E1_SEEDS}
+    values = np.array(list(per_seed.values()), dtype=float)
+    return {
+        "per_seed_cv_official_score": per_seed,
+        "mean_cv_official_score": float(values.mean()),
+        "std_cv_official_score": float(values.std(ddof=0)),
+        "min_cv_official_score": float(values.min()),
+        "max_cv_official_score": float(values.max()),
+    }
+
+
 METRIC_FIELDS = (
     "member", "model", "experiment", "config_id", "fold", "seed",
     "official_score", "accuracy", "n_eval", "train_seconds", "predict_seconds",
 )
 PREDICTION_FIELDS = (
-    "member", "model", "experiment", "config_id", "fold", "stock_id", "date", "predicted_y",
+    "member", "model", "experiment", "config_id", "fold", "seed", "stock_id", "date", "predicted_y",
 )

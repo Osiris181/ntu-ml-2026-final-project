@@ -1,8 +1,8 @@
 # Intraday Direction Prediction for Taiwanese Stocks
 
-This repository supports the Fall 2026 NTU Machine Learning final project. The task is to predict whether each of 50 Taiwanese stocks will finish a trading day above its adjusted opening price. The repository contains the shared experiment infrastructure and four member workspaces. An XGBoost E1 runner is prepared for 鄭振慈; it has not been run, and the repository does not yet contain trained models or measured model results.
+This repository supports the Fall 2026 NTU Machine Learning final project. The task is to predict whether each of 50 Taiwanese stocks will finish a trading day above its adjusted opening price. The repository contains shared experiment infrastructure and four member workspaces.
 
-The [team workflow guide](context/README.md) explains how members use the current pipeline. The [v1.1 protocol record](context/protocol-v1.1.md) preserves the original decisions and course requirements. The official [project specification](final_project.pdf) takes precedence.
+The [team workflow guide](context/README.md) explains how members use the current pipeline. The [v1.2 protocol revision](context/protocol-v1.2.md) records the required five-seed E1 rule; the [v1.1 protocol record](context/protocol-v1.1.md) preserves the original decisions and course requirements. The official [project specification](final_project.pdf) takes precedence.
 
 ## Setup and local checks
 
@@ -30,7 +30,7 @@ uv run python -m unittest discover -s tests -v
 
 `uv sync` installs the dependencies declared in `pyproject.toml` into the project environment and creates `uv.lock` when needed. The project requires Python 3.11 or newer.
 
-The prepared [XGBoost E1 runner](members/鄭振慈/README.md) has its own usage instructions. It has not been executed or used to select a model.
+The [XGBoost E1 runner](members/鄭振慈/README.md) has its own usage instructions.
 
 ## Prediction task and score
 
@@ -119,14 +119,14 @@ Training uses all 100 supplied stocks. Validation and final testing use only the
 | Fold 3 | 2020–2024 | 2025 |
 | Independent holdout | 2020–2025 | 2026-01-01 through 2026-05-31 |
 
-Windows are intersected with trading rows present in the data. The shared seed is `42`. Configuration selection uses the **equal-weight mean** of the three yearly validation official scores: `(score_2023 + score_2024 + score_2025) / 3`. The Jan–May 2026 holdout is reserved for evaluation after choices are frozen.
+Windows are intersected with trading rows present in the data. E1 requires seeds **42, 64, 128, 256, and 512** on each fold. For each seed, the three yearly official scores are weighted equally; configuration selection uses the mean of those five seed-level CV scores. Save all 15 fold scores and report the mean and standard deviation across seeds. The Jan–May 2026 holdout is reserved for evaluation after choices are frozen.
 
 ## Phase 2 frozen-model strategy
 
 This is the team's **agreed deployment strategy**, not an implemented training or daily inference workflow.
 
-1. **Train and select:** run the existing three expanding validation folds. Compare configurations by the equal-weight mean official score, with model-specific search methods and budgets chosen by each member. Keep the Jan–May 2026 holdout isolated and evaluate it only after the configuration is fixed.
-2. **Refit and freeze:** retrain the chosen configuration on the agreed eligible historical training data. Save the trained model, its fitted preprocessing pipeline, the exact F0 feature definitions and order, and its binary prediction threshold or decision rule. The eligible deployment-refit window and artifact format still need a team decision; do not infer them from the current CSV end date.
+1. **Train and select:** run the existing three expanding validation folds for all five required E1 seeds. Compare configurations by the mean of the five seed-level CV official scores, with model-specific search methods and budgets chosen by each member. Keep the Jan–May 2026 holdout isolated and evaluate it only after the configuration is fixed.
+2. **Refit and freeze:** retrain the chosen configuration on the agreed eligible historical training data. Save the trained model, its fitted preprocessing pipeline, the exact F0 feature definitions and order, and its binary prediction threshold or decision rule. The eligible deployment-refit window, final seed or ensemble policy, and artifact format still need a team decision; do not infer them from the current CSV end date.
 3. **Run daily inference:** obtain newly available historical market inputs, build the same 21 F0 fields under the shared lag and cutoff rules, apply the **frozen** preprocessing pipeline, and run the **frozen** model and threshold to produce 50 binary predictions. Export them with that day's actual official Phase 2 submission template.
 
 Daily updates change **input feature values only**. They do not refit preprocessing, change model parameters or threshold, or trigger tuning. Live input acquisition and validation remain implementation tasks; see the data-quality section for unresolved timing and indicator assumptions.
@@ -143,11 +143,11 @@ The supplied `sample_submission.csv` is the Phase 1 template: 50 `id` rows and 8
 |---|---|
 | `data/market/`, `data/global/`, `data/info.json` | Supplied historical inputs and stock lists |
 | `shared/data_loader.py`, `shared/features.py` | Input validation and centralized, conservative F0 construction |
-| `shared/splits.py`, `configs/protocol.json` | Chronological folds and seed |
+| `shared/splits.py`, `configs/protocol.json` | Chronological folds and required E1 seeds |
 | `shared/preprocessing.py` | Shared E1 preprocessing |
 | `shared/evaluation.py` | Prediction-key checks, official score, accuracy, and CV score |
 | `shared/submission.py`, `sample_submission.csv` | Validated template-based submission export and the supplied Phase 1 template |
-| `members/` | Four personal experiment directories; 鄭振慈 has a prepared XGBoost E1 runner |
+| `members/` | Four personal experiment directories; the XGBoost E1 runner is in 鄭振慈's workspace |
 | `tests/` | Shared integrity, feature, split, preprocessing, and scoring tests |
 
 The shared F0 CSV has been generated from the supplied historical data. Its lag rules are consistent across members; the data-quality assumptions above remain unverified externally.

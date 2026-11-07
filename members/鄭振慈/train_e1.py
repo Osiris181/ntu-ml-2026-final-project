@@ -1,7 +1,10 @@
-"""Run one fixed XGBoost E1 baseline on the three agreed validation folds.
+"""Run one fixed XGBoost E1 baseline for five seeds on three validation folds.
 
 Run from the repository root with:
-    uv run python -m members.鄭振慈.xgboost_e1
+    uv run python -m members.鄭振慈.train_e1
+
+Direct file execution also works:
+    uv run python members/鄭振慈/train_e1.py
 
 This script does not use the Jan-May 2026 holdout, tune a configuration,
 refit a deployment model, or create a competition submission.
@@ -12,18 +15,23 @@ from __future__ import annotations
 import argparse
 import json
 import platform
+import sys
 import time
 from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 import numpy as np
 import pandas as pd
 import xgboost as xgb
 
 from shared.data_loader import KEYS, load_market, load_metadata
-from shared.evaluation import METRIC_FIELDS, PREDICTION_FIELDS, cv_score, evaluate_predictions
+from shared.evaluation import METRIC_FIELDS, PREDICTION_FIELDS, e1_seed_summary, evaluate_predictions
 from shared.features import load_f0_dataset
 from shared.preprocessing import F0_FEATURES, BaselinePreprocessor
-from shared.splits import FOLDS, SEED, split_market
+from shared.splits import E1_SEEDS, FOLDS, split_market
 
 MEMBER = "鄭振慈"
 MODEL = "XGBoost"
@@ -32,7 +40,8 @@ CONFIG_ID = "xgboost_initial_v1"
 NUM_BOOST_ROUND = 100
 THRESHOLD = 0.5
 
-# Fixed first-run configuration. No fold-specific tuning or early stopping.
+# Preserve the original model configuration; only the seed changes between runs.
+# With full row and column sampling, these runs may produce identical predictions.
 PARAMS = {
     "objective": "binary:logistic",
     "eval_metric": "logloss",
@@ -43,7 +52,6 @@ PARAMS = {
     "colsample_bytree": 1.0,
     "lambda": 1.0,
     "alpha": 0.0,
-    "seed": SEED,
     "nthread": 4,
 }
 
@@ -69,7 +77,7 @@ def run(data_dir: Path, f0_path: Path, output_dir: Path) -> None:
     f0 = load_f0_dataset(f0_path)
     metric_rows = []
     prediction_frames = []
-    fold_scores = {}
+    fold_scores = {seed: {} for seed in E1_SEEDS}
 
     for fold in FOLDS:
         train_rows, valid_rows = split_market(market, target_ids, fold)
@@ -85,38 +93,43 @@ def run(data_dir: Path, f0_path: Path, output_dir: Path) -> None:
 
         dtrain = xgb.DMatrix(x_train, label=train["y"].to_numpy())
         dvalid = xgb.DMatrix(x_valid)
-        train_start = time.perf_counter()
-        booster = xgb.train(PARAMS, dtrain, num_boost_round=NUM_BOOST_ROUND)
-        train_seconds = time.perf_counter() - train_start
-        predict_start = time.perf_counter()
-        p_up = booster.predict(dvalid)
-        predict_seconds = time.perf_counter() - predict_start
-        if len(p_up) != len(valid) or not np.isfinite(p_up).all():
-            raise ValueError(f"Invalid probability output for fold {fold.name}")
+        for seed in E1_SEEDS:
+            params = {**PARAMS, "seed": seed}
+            train_start = time.perf_counter()
+            booster = xgb.train(params, dtrain, num_boost_round=NUM_BOOST_ROUND)
+            train_seconds = time.perf_counter() - train_start
+            predict_start = time.perf_counter()
+            p_up = booster.predict(dvalid)
+            predict_seconds = time.perf_counter() - predict_start
+            if len(p_up) != len(valid) or not np.isfinite(p_up).all():
+                raise ValueError(f"Invalid probability output for fold {fold.name}, seed {seed}")
 
-        predictions = valid.loc[:, KEYS].copy()
-        predictions["predicted_y"] = (p_up > THRESHOLD).astype(int)
-        result = evaluate_predictions(valid_rows, predictions)
-        fold_scores[fold.name] = result["official_score"]
-        metric_rows.append({
-            "member": MEMBER,
-            "model": MODEL,
-            "experiment": EXPERIMENT,
-            "config_id": CONFIG_ID,
-            "fold": fold.name,
-            "seed": SEED,
-            **result,
-            "train_seconds": train_seconds,
-            "predict_seconds": predict_seconds,
-        })
-        predictions.insert(0, "fold", fold.name)
-        predictions.insert(0, "config_id", CONFIG_ID)
-        predictions.insert(0, "experiment", EXPERIMENT)
-        predictions.insert(0, "model", MODEL)
-        predictions.insert(0, "member", MEMBER)
-        predictions["p_up"] = p_up
-        prediction_frames.append(predictions)
-        print(f"{fold.name}: {result['n_eval']} predictions; official score {result['official_score']:.8f}")
+            predictions = valid.loc[:, KEYS].copy()
+            predictions["predicted_y"] = (p_up > THRESHOLD).astype(int)
+            result = evaluate_predictions(valid_rows, predictions)
+            fold_scores[seed][fold.name] = result["official_score"]
+            metric_rows.append({
+                "member": MEMBER,
+                "model": MODEL,
+                "experiment": EXPERIMENT,
+                "config_id": CONFIG_ID,
+                "fold": fold.name,
+                "seed": seed,
+                **result,
+                "train_seconds": train_seconds,
+                "predict_seconds": predict_seconds,
+            })
+            predictions.insert(0, "seed", seed)
+            predictions.insert(0, "fold", fold.name)
+            predictions.insert(0, "config_id", CONFIG_ID)
+            predictions.insert(0, "experiment", EXPERIMENT)
+            predictions.insert(0, "model", MODEL)
+            predictions.insert(0, "member", MEMBER)
+            predictions["p_up"] = p_up
+            prediction_frames.append(predictions)
+            print(f"{fold.name}, seed {seed}: {result['n_eval']} predictions; official score {result['official_score']:.8f}")
+
+    selection = e1_seed_summary(fold_scores)
 
     summary = {
         "member": MEMBER,
@@ -128,13 +141,13 @@ def run(data_dir: Path, f0_path: Path, output_dir: Path) -> None:
         "preprocessing": "shared.preprocessing.BaselinePreprocessor; fitted separately per fold",
         "training_universe": "Top100@Y",
         "evaluation_universe": "Top50@Y",
-        "split_version": "1.1",
-        "seed": SEED,
+        "split_version": "1.2",
+        "seeds": list(E1_SEEDS),
         "threshold_rule": "predict 1 when p_up > 0.5, else 0",
         "params": PARAMS,
         "num_boost_round": NUM_BOOST_ROUND,
-        "fold_official_scores": fold_scores,
-        "cv_official_score": cv_score(fold_scores),
+        "fold_official_scores_by_seed": fold_scores,
+        **selection,
         "versions": {
             "python": platform.python_version(),
             "numpy": np.__version__,
@@ -152,16 +165,17 @@ def run(data_dir: Path, f0_path: Path, output_dir: Path) -> None:
     with (output_dir / "summary.json").open("w", encoding="utf-8") as file:
         json.dump(summary, file, ensure_ascii=False, indent=2)
         file.write("\n")
-    print(f"Equal-weight CV official score: {summary['cv_official_score']:.8f}")
+    print(f"Five-seed mean CV official score: {summary['mean_cv_official_score']:.8f}")
+    print(f"Five-seed CV standard deviation: {summary['std_cv_official_score']:.8f}")
     print(f"Results written to {output_dir}")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data-dir", type=Path, default=Path("data"))
-    parser.add_argument("--f0-path", type=Path, default=Path("data/processed/f0.csv"))
+    parser.add_argument("--data-dir", type=Path, default=PROJECT_ROOT / "data")
+    parser.add_argument("--f0-path", type=Path, default=PROJECT_ROOT / "data/processed/f0.csv")
     parser.add_argument(
-        "--output-dir", type=Path, default=Path("results/zheng_xgboost_e1_initial_v1")
+        "--output-dir", type=Path, default=PROJECT_ROOT / "results/zheng_xgboost_e1_five_seeds_v1"
     )
     args = parser.parse_args()
     run(args.data_dir, args.f0_path, args.output_dir)

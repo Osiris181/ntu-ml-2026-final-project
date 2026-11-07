@@ -9,6 +9,7 @@ import pandas as pd
 from .data_loader import KEYS, validate_keys
 
 SEED = 42
+E1_SEEDS = (42, 64, 128, 256, 512)
 
 
 @dataclass(frozen=True)

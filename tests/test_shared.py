@@ -7,13 +7,13 @@ import numpy as np
 import pandas as pd
 
 from shared.data_loader import load_metadata, validate_keys
-from shared.evaluation import cv_score, evaluate_predictions
+from shared.evaluation import cv_score, e1_seed_summary, evaluate_predictions
 from shared.features import (
     DATASET_COLUMNS, build_f0_dataset, load_f0_dataset,
     stock_history_candidates,
 )
 from shared.preprocessing import BaselinePreprocessor, F0_FEATURES, NUMERIC_FEATURES
-from shared.splits import FOLDS, HOLDOUT, split_market
+from shared.splits import E1_SEEDS, FOLDS, HOLDOUT, split_market
 from shared.submission import build_submission, load_submission_template, write_submission
 
 
@@ -173,6 +173,21 @@ class SharedTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "positive"):
             evaluate_predictions(bad, prediction)
         self.assertAlmostEqual(cv_score({"2023": 1, "2024": 2, "2025": 3}), 2)
+
+    def test_five_seed_selection_summary(self):
+        self.assertEqual(E1_SEEDS, (42, 64, 128, 256, 512))
+        scores = {
+            seed: {"2023": float(i), "2024": float(i + 1), "2025": float(i + 2)}
+            for i, seed in enumerate(E1_SEEDS)
+        }
+        summary = e1_seed_summary(scores)
+        self.assertEqual(summary["per_seed_cv_official_score"], dict(zip(E1_SEEDS, [1.0, 2.0, 3.0, 4.0, 5.0])))
+        self.assertEqual(summary["mean_cv_official_score"], 3.0)
+        self.assertAlmostEqual(summary["std_cv_official_score"], np.sqrt(2))
+        with self.assertRaisesRegex(ValueError, "exactly these seeds"):
+            e1_seed_summary({42: scores[42]})
+        with self.assertRaisesRegex(ValueError, "one official score"):
+            e1_seed_summary({**scores, 42: {"2023": 1.0}})
 
     def test_submission_uses_actual_phase1_template(self):
         root = Path(__file__).resolve().parents[1]

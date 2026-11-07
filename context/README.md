@@ -6,14 +6,15 @@ We are building four different machine learning approaches to predict whether a 
 official_score = average((2 × prediction - 1) × (adjusted_close - adjusted_open) / adjusted_open)
 ```
 
-The [main README](../README.md) has the exact F0 formulas and public project overview. The [original protocol](protocol-v1.1.md) keeps the detailed team decisions; the [course PDF](../final_project.pdf) is authoritative.
+The [main README](../README.md) has the exact F0 formulas and public project overview. The [v1.2 revision](protocol-v1.2.md) records the five-seed E1 rule, while the [original protocol](protocol-v1.1.md) keeps the earlier decisions; the [course PDF](../final_project.pdf) is authoritative.
 
 ## Files in this directory
 
 | File | Use |
 |---|---|
 | [`README.md`](README.md) | This practical guide for members: available inputs, E1/E2 work, shared pipeline, and model inputs/outputs. |
-| [`protocol-v1.1.md`](protocol-v1.1.md) | Original protocol record. Use the current root README and `AGENTS.md` for later agreed changes. |
+| [`protocol-v1.1.md`](protocol-v1.1.md) | Original protocol record, including the superseded single-seed rule. |
+| [`protocol-v1.2.md`](protocol-v1.2.md) | Current revision requiring five E1 seeds. |
 
 ## What we have
 
@@ -24,7 +25,7 @@ The [main README](../README.md) has the exact F0 formulas and public project ove
 | Stock lists | `data/info.json`: `Top100@Y` lists the 100 supplied stocks; `Top50@Y` lists the 50 stocks we must evaluate. |
 | Shared code | `shared/` builds the common F0 dataset, defines date splits and E1 preprocessing, scores predictions, and exports submission files. |
 | Shared F0 file | `data/processed/f0.csv` has one feature row for every supplied stock/date row. Regenerate it from raw data when needed; it is gitignored. |
-| Personal workspaces | One folder per member in `members/`. 鄭振慈 has a prepared XGBoost E1 script; no models have been trained and no results have been generated yet. |
+| Personal workspaces | One folder per member in `members/` for model scripts and experiment records. |
 
 The label `y` says whether adjusted close was above adjusted open on that date. It is used for training and scoring, never as a model input. The target day's prices, volume, and indicators are also excluded from input features. Our cutoff is **strictly before 09:00 Asia/Taipei on the prediction date**; the shared date-lag rules below are the team's conservative, unverified proxy for availability.
 
@@ -45,11 +46,11 @@ That is **21 logical fields**. One-hot encoding expands the two categorical fiel
 
 ## Approaches
 
-The team will compare **four meaningfully different approaches**, one primary approach per member. 鄭振慈 has chosen the XGBoost boosted-tree approach and has a prepared E1 script. The other model-to-member assignments are not finalized. Candidate families discussed for the remaining approaches include Logistic Regression, Random Forest, and a multilayer perceptron.
+The team will compare **four meaningfully different approaches**, one primary approach per member. 鄭振慈 has chosen the XGBoost boosted-tree approach. The other model-to-member assignments are not finalized. Candidate families discussed for the remaining approaches include Logistic Regression, Random Forest, and a multilayer perceptron.
 
 Each member runs two versions of their approach:
 
-- **E1, shared baseline:** compare the four algorithms under the same conditions. Everyone trains on all 100 stocks, uses only the 21 F0 fields, uses the same preprocessing, predicts the same 50 target-stock rows, and uses the same folds, seed `42`, and scorer. The member implements their own algorithm; the shared parts stay fixed.
+- **E1, shared baseline:** compare the four algorithms under the same conditions. Everyone trains on all 100 stocks, uses only the 21 F0 fields, uses the same preprocessing, predicts the same 50 target-stock rows, and uses the same folds, seeds `42`, `64`, `128`, `256`, and `512`, and scorer. The member implements their own algorithm; the shared parts stay fixed.
 - **E2, your improved version:** use E1 as your comparison point, then try improvements you can explain and reproduce. You may add features known before the cutoff, change preprocessing, and tune your algorithm. Keep the target rows, cutoff, folds, and official scorer unchanged. Compare E2 with your own E1.
 
 For E1, the shared preprocessor replaces invalid numeric values with missing values, fills missing numeric values with **medians learned from the training fold**, then standardizes numeric columns using that fold. It fills missing feature categories with `Unknown` and one-hot encodes categories learned from the training fold. It has no default clipping or feature selection. Fit a **new** preprocessor for each fold; transform validation rows with that fitted instance.
@@ -72,7 +73,7 @@ Member trains their approach and predicts evaluation rows
 Shared code checks predictions and calculates scores
 ```
 
-We use three expanding validation folds: **2020–2022 → 2023**, **2020–2023 → 2024**, and **2020–2024 → 2025**. The team's seed is `42`. Choose a configuration using the **average of the three yearly official scores**, giving each year equal weight. The **Jan–May 2026 holdout** is used only after model choices are fixed.
+We use three expanding validation folds: **2020–2022 → 2023**, **2020–2023 → 2024**, and **2020–2024 → 2025**. Run each fold with seeds **42, 64, 128, 256, and 512**. For each seed, average its three yearly official scores equally; compare configurations by averaging the five seed-level CV scores. Keep the 15 fold scores and show the spread across seeds. Seed changes may have no effect for deterministic model configurations, so identical results do not establish stability under other model or data changes. The **Jan–May 2026 holdout** is used only after model choices are fixed. See the [v1.2 protocol revision](protocol-v1.2.md).
 
 Members load the same F0 file directly; no member needs to implement their own historical lag rules:
 
@@ -96,7 +97,7 @@ Run the F0 generation command above if `data/processed/f0.csv` is absent. Then, 
 from shared.data_loader import load_market, load_metadata
 from shared.features import load_f0_dataset
 from shared.preprocessing import BaselinePreprocessor, F0_FEATURES
-from shared.splits import FOLDS, split_market
+from shared.splits import E1_SEEDS, FOLDS, split_market
 
 target_ids, _ = load_metadata("data")
 market = load_market("data")
@@ -122,7 +123,7 @@ valid_keys = valid[keys]
 
 `X_train` and `y_train` go to your member model; `X_valid` is its validation input. Keep `valid_keys` with the model's predictions so the shared scorer can match every target stock/date row to `valid_rows`. The F0 CSV intentionally keeps some missing feature values: `fit_transform` learns numeric medians and scaling **only from this training fold**, while `transform` applies those fitted values to validation. Never fit the preprocessor on `valid` or on all of `f0`.
 
-Repeat with `FOLDS[1]` and `FOLDS[2]`, creating a **new** `BaselinePreprocessor` and model for each fold. The folds train on all 100 stocks and validate on the same 50 target stocks. The shared scorer checks that no required prediction is missing and calculates each fold's score.
+Repeat with `FOLDS[1]` and `FOLDS[2]`, creating a **new** `BaselinePreprocessor` for each fold. For each fold, train a separate model with each seed in `E1_SEEDS` from `shared.splits`, keeping other configuration choices fixed. The folds train on all 100 stocks and validate on the same 50 target stocks. The shared scorer checks that no required prediction is missing and calculates each seed/fold score.
 
 After your member-owned model has produced binary predictions for `X_valid`, attach them to the matching keys and call the shared scorer:
 
@@ -134,7 +135,7 @@ predictions["predicted_y"] = model.predict(X_valid)  # your fitted member model
 fold_result = evaluate_predictions(valid_rows, predictions)
 ```
 
-Record `fold_result["official_score"]` separately for each of `2023`, `2024`, and `2025`. Once all three folds are done, use `cv_score` from `shared.evaluation` on a dictionary of those yearly scores to compare configurations. The [shared module guide](../shared/README.md#what-members-call-in-e1) lists every common call, its input, and its output. The Jan–May 2026 `HOLDOUT` is for evaluation only after model selection.
+Record `fold_result["official_score"]` separately for each seed and each of `2023`, `2024`, and `2025`. Use `e1_seed_summary` from `shared.evaluation` on `{seed: {"2023": score, "2024": score, "2025": score}}` to obtain the five seed-level CV scores, their selection mean, and their standard deviation. The [shared module guide](../shared/README.md#what-members-call-in-e1) lists every common call, its input, and its output. The Jan–May 2026 `HOLDOUT` is for evaluation only after model selection.
 
 ## What goes into and comes out of a member's model
 

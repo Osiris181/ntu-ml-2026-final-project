@@ -1,14 +1,14 @@
 # AGENTS.md — Coding Agent Project Context
 
 **NTU Machine Learning Final Project, Fall 2026**  
-**Protocol:** v1.1 baseline plus centralized F0 lag policy and Phase 2 frozen-model strategy  
+**Protocol:** v1.2 E1 seed revision plus centralized F0 lag policy and Phase 2 frozen-model strategy
 **Audience:** Codex and other coding agents operating inside this repository.
 
-> **Instruction priority:** Obey user requests and the official `final_project.pdf`. Treat this file as the team's agreed design, not as a claim that code already exists. **LOCKED** choices must be preserved. **MEMBER-OWNED** choices are intentionally flexible. **SHARED / OPEN** details must be surfaced rather than guessed. See `context/README.md` for the current team workflow, `context/protocol-v1.1.md` for the original protocol, and `README.md` for the public overview.
+> **Instruction priority:** Obey user requests and the official `final_project.pdf`. Treat this file as the team's agreed design, not as a claim that code already exists. **LOCKED** choices must be preserved. **MEMBER-OWNED** choices are intentionally flexible. **SHARED / OPEN** details must be surfaced rather than guessed. See `context/README.md` for the current team workflow, `context/protocol-v1.2.md` for the seed revision, `context/protocol-v1.1.md` for the original protocol, and `README.md` for the public overview.
 
 ## 1. Repository state and your role
 
-The repository now has shared loaders, a generated F0 dataset, chronological splits, E1 preprocessing, scoring and template-based submission export utilities, tests, and four member workspaces. 鄭振慈 has a prepared XGBoost E1 runner, but it has not been run. The project uses `uv` and `pyproject.toml` for dependencies. Members use `data/processed/f0.csv` or regenerate it with `uv run python -m shared.features`; do not implement separate E1 lag rules. The current team workflow is in `context/README.md`; the original protocol is archived at `context/protocol-v1.1.md`. Preserve these shared contracts as members add their own experiments.
+The repository has shared loaders, a generated F0 dataset, chronological splits, E1 preprocessing, scoring and template-based submission export utilities, tests, and four member workspaces. The project uses `uv` and `pyproject.toml` for dependencies. Members use `data/processed/f0.csv` or regenerate it with `uv run python -m shared.features`; do not implement separate E1 lag rules. The current team workflow is in `context/README.md`; the original protocol is archived at `context/protocol-v1.1.md`. Preserve these shared contracts as members add their own experiments.
 
 Unless explicitly instructed, **do not** automatically train models, choose owners, connect to the competition website, make submissions, fetch live market data, generate fabricated metrics, or implement irreversible assumptions about missing timestamps. You may create clear, runnable shared code and tests for *verified* behavior when asked; create TODOs/explicit exceptions for unresolved behavior. Avoid unnecessary abstraction and dependencies.
 
@@ -88,17 +88,18 @@ This policy is an agreed proxy for the pre-09:00 cutoff, **not external proof of
 - Final independent holdout: train/refit **2020-01-01 through 2025-12-31** (100 stocks), test **2026-01-01 through 2026-05-31** (50 target stocks).
 - Intersect date windows with **actual available trading sessions**; sort by `(date, stock_id)` for deterministic output; enforce unique `(stock_id,date)` keys.
 - Split by **calendar trading date**; never randomly mix future/past stock-date rows. Any common data object for a fold must carry the same evaluation keys across all members.
-- Single random seed **42**. Extra seeds are optional, not part of required base pipeline.
+- Required E1 seeds: **42, 64, 128, 256, 512**, for each model configuration on each of the same three folds. Seed 42 remains the reference seed. Do not choose the best seed after seeing validation results.
 
 ### Selection and test isolation
 
-For each model/configuration, calculate official score on target-stock predictions for each validation year **separately**, then maximize the **equally weighted mean of three fold scores**:
+For each model/configuration and seed, calculate official score on target-stock predictions for each validation year **separately**. Compute each seed's **equally weighted mean of three fold scores**, then compare configurations by the mean of those five seed-level CV scores:
 
 ```text
 CV_score = (S_2023 + S_2024 + S_2025) / 3
+E1_selection_score = mean(CV_score_seed_42, CV_score_seed_64, CV_score_seed_128, CV_score_seed_256, CV_score_seed_512)
 ```
 
-Do **not** replace this with pooled sample-weighted score, accuracy, or validation on training stocks. Save all individual fold scores. Hyperparameters, feature variants, optional threshold selection and other tuning use CV folds, **not** final Jan–May 2026 test. Freeze choices before single final holdout evaluation. Do not reselect after observing holdout outcomes.
+Do **not** replace this with pooled sample-weighted score, accuracy, or validation on training stocks. Save all 15 seed/fold scores, each seed's CV score, and their mean and standard deviation. Five seeds measure sensitivity to randomization; they do not guarantee robustness or remove validation-period luck. Deterministic model configurations may return identical results for all five seeds; report that rather than claiming independent variation. Hyperparameters, feature variants, optional threshold selection and other tuning use CV folds, **not** final Jan–May 2026 test. Freeze choices before single final holdout evaluation. Do not reselect after observing holdout outcomes. The final deployment-refit seed or ensemble policy remains **SHARED / OPEN**.
 
 ### Prediction-time cutoff and leakage safety
 
@@ -112,7 +113,7 @@ For target date `t`, all features must have been **published strictly before 09:
 
 ### E1 and E2
 
-- **E1 (controlled):** identical F0 source information, shared baseline preprocessing, same folds, seed and evaluation keys for all four distinct algorithms.
+- **E1 (controlled):** identical F0 source information, shared baseline preprocessing, same folds, five-seed schedule and evaluation keys for all four distinct algorithms.
 - **E2 (member-optimized):** individual members may try extra lagged/causal features, alternative preprocessing, feature selection and tuning strategies, but must preserve the same cutoff, fold/test keys, scorer and result schema. Compare each E2 against its corresponding E1.
 - **MEMBER-OWNED:** hyperparameter search algorithm (Grid Search/Random Search/Optuna, etc.), hyperparameter ranges, trial budget, E2 feature sets, optional ablation studies and model-specific interpretability. **Log choices and compute cost.** Different optimization budgets may explain some observed differences.
 - **Optional individual study:** train 100 stocks vs. train only 50 target stocks, **evaluating on the same 50 target stocks** in both conditions. Initial controlled ablation holds model/features/config/seed fixed while varying the training universe. This ablation is *not* a team-wide replacement for 100-stock E1.
@@ -121,8 +122,8 @@ For target date `t`, all features must have been **published strictly before 09:
 
 Keep **training**, **selection**, **deployment refitting**, and **daily inference** distinct:
 
-1. Train and select a configuration with the existing three expanding validation folds and equal-weight mean official score. Model-specific optimizer, search range, and trial budget remain **MEMBER-OWNED**. Preserve the independent Jan–May 2026 holdout: evaluate it once after configuration choices are frozen, never use it to select or retune.
-2. After selection, retrain the chosen configuration on the agreed eligible historical training data for deployment. Save and freeze the trained model parameters, fitted preprocessing objects, exact feature definitions and column order, and binary prediction threshold or decision rule. The deployment-refit date window and artifact storage/serialization format are **SHARED / OPEN**; do not assume that all rows through the latest CSV date are eligible.
+1. Train and select a configuration with the existing three expanding validation folds and required five E1 seeds. Compare by the equal-weight mean of the five seed-level CV scores. Model-specific optimizer, search range, and trial budget remain **MEMBER-OWNED**. Preserve the independent Jan–May 2026 holdout: evaluate it once after configuration choices are frozen, never use it to select or retune.
+2. After selection, retrain the chosen configuration on the agreed eligible historical training data for deployment. Save and freeze the trained model parameters, fitted preprocessing objects, exact feature definitions and column order, and binary prediction threshold or decision rule. The deployment-refit date window, final seed or ensemble policy, and artifact storage/serialization format are **SHARED / OPEN**; do not assume that all rows through the latest CSV date are eligible.
 3. For each Phase 2 session, obtain and validate newly available historical input data. Build the same **21 F0 fields** for the 50 target stocks under the central `t-1`/`t-2`/strict-prior-global rules and the **09:00 Asia/Taipei** prediction cutoff. Apply the frozen preprocessing objects without fitting them again. Use the frozen model and threshold to produce exactly 50 binary predictions, then export them from that session's actual official submission template.
 4. **Do not retrain, tune, select a new threshold, update preprocessing statistics or category vocabulary, or modify model parameters during daily inference.** Updating the input feature values does not modify the saved model.
 
@@ -239,7 +240,7 @@ Archive supplied data only through **2026-08-31**: obtaining reproducible **Sept
 | Target and official scorer | Model selection after team assignment | External publication-time verification |
 | 100-stock pooled E1 train and 50-stock eval | Hyperparameter optimizer and tuning budget | Publication time of institutional features |
 | Same chronological folds and test | E2 feature engineering and preprocessing | Technical-indicator reproducibility |
-| Fixed seed `42` and five-day global maximum age | E2 feature selection/ablation | Actual source publication delays |
+| E1 seeds `42`, `64`, `128`, `256`, `512` and five-day global maximum age | E2 feature selection/ablation | Actual source publication delays |
 | Baseline 21 F0 fields and shared E1 preprocessing | Optional 100-vs-50 training ablation | Results schema implementation and secondary metrics |
 | Historical pre-09:00 cutoff, test isolation, and frozen daily inference | Model-specific diagnostics | Live input acquisition, deployment-refit window, artifact storage, submission integration |
 
