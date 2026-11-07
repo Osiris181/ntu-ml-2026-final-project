@@ -30,7 +30,7 @@ uv run python -m unittest discover -s tests -v
 
 `uv sync` installs the dependencies declared in `pyproject.toml` into the project environment and creates `uv.lock` when needed. The project requires Python 3.11 or newer.
 
-The [XGBoost E1 runner](members/鄭振慈/README.md) has its own usage instructions.
+The [XGBoost E1 runner](members/zhenci/README.md) has its own usage instructions.
 
 ## Prediction task and score
 
@@ -147,7 +147,7 @@ The supplied `sample_submission.csv` is the Phase 1 template: 50 `id` rows and 8
 | `shared/preprocessing.py` | Shared E1 preprocessing |
 | `shared/evaluation.py` | Prediction-key checks, official score, accuracy, and CV score |
 | `shared/submission.py`, `sample_submission.csv` | Validated template-based submission export and the supplied Phase 1 template |
-| `members/` | Four personal experiment directories; the XGBoost E1 runner is in 鄭振慈's workspace |
+| `members/` | Four personal experiment directories; the XGBoost E1 runner is in `members/zhenci/` |
 | `tests/` | Shared integrity, feature, split, preprocessing, and scoring tests |
 
 The shared F0 CSV has been generated from the supplied historical data. Its lag rules are consistent across members; the data-quality assumptions above remain unverified externally.

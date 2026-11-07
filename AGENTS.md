@@ -14,10 +14,10 @@ Unless explicitly instructed, **do not** automatically train models, choose owne
 
 ### Team folder owners
 
-- `members/鄭振慈/`
-- `members/葉家堯/`
-- `members/龔建瑄/`
-- `members/倪永珅/`
+- `members/zhenci/` (鄭振慈)
+- `members/jiayao/` (葉家堯)
+- `members/jianxuan/` (龔建瑄)
+- `members/yongshen/` (倪永珅)
 
 One distinct primary ML approach per member. 鄭振慈 has chosen XGBoost for the boosted-tree track; the other primary model assignments are still open. Candidate families for those remaining tracks include Logistic Regression, Random Forest, and MLP. Do not assign the remaining models without a team decision.
 
@@ -195,10 +195,10 @@ shared/preprocessing.py
 shared/splits.py
 shared/evaluation.py
 shared/submission.py
-members/鄭振慈/
-members/葉家堯/
-members/龔建瑄/
-members/倪永珅/
+members/zhenci/
+members/jiayao/
+members/jianxuan/
+members/yongshen/
 results/
 submissions/
 tests/
