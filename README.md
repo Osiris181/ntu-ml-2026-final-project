@@ -110,6 +110,8 @@ The project compares **four meaningfully different ML approaches** on common tar
 
 The shared E1 preprocessing converts infinite numeric values to missing, imputes numeric fields with training-fold medians, and standardizes using training-fold means and population standard deviations. Missing categorical feature values become `Unknown`; one-hot categories are learned from the training fold. Unseen evaluation categories are handled deterministically. An all-missing numeric training feature raises an error. E1 has no default clipping, winsorization, or feature selection.
 
+The team workflow runs **E1 first** for each approach. After choosing an E1 configuration by the shared validation score, each member prepares a Phase 1 baseline submission from a refitted E1 model when all required input dates and template keys are available. E2 development and comparison with that approach's E1 baseline follow. A baseline submission is an early checkpoint; final model selection still uses the shared validation protocol and the reserved holdout, not submission feedback.
+
 Training uses all 100 supplied stocks. Validation and final testing use only the 50 targets. Every approach must predict the same target stock/date rows. Preprocessing is fitted separately for each training window.
 
 | Run | Training dates | Evaluation dates |

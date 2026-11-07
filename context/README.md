@@ -55,6 +55,15 @@ Each member runs two versions of their approach:
 
 For E1, the shared preprocessor replaces invalid numeric values with missing values, fills missing numeric values with **medians learned from the training fold**, then standardizes numeric columns using that fold. It fills missing feature categories with `Unknown` and one-hot encodes categories learned from the training fold. It has no default clipping or feature selection. Fit a **new** preprocessor for each fold; transform validation rows with that fitted instance.
 
+### Work in this order
+
+1. Run your E1 approach on all three shared folds and five required seeds. Record all 15 official scores and choose your E1 configuration by the agreed mean CV score. Keep the Jan–May 2026 holdout out of this choice.
+2. Refit that E1 configuration on an explicitly agreed eligible historical training window. Save the model together with its fitted preprocessor, F0 feature order and definitions, and binary threshold or decision rule. This is a **provisional E1 submission artifact**, not the final Phase 2 model.
+3. When available historical source data passes the shared input checks and can produce F0 rows for **every** stock/date key in the actual Phase 1 template, generate and validate an E1 submission CSV. Submit the E1 baseline through the team's official process and record which configuration and artifact produced it. Check the competition's actual account and submission rules before upload; the repository does not establish a separate allowance for each member. Do not fill unavailable dates with fabricated features or template zeros.
+4. Then start E2 and compare it with your own E1 using the same folds, target keys, cutoff, and official scorer. Use CV for model choices; do not tune from submission feedback or the reserved holdout. Final model selection and Phase 2 freezing are later decisions.
+
+E1 submissions give the team an early baseline without waiting for E2. They do not change the required E1 features, preprocessing, seeds, chronological splits, or evaluation method.
+
 ## Shared pipeline
 
 ```text
