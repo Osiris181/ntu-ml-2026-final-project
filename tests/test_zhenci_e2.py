@@ -2,7 +2,7 @@
 
 import unittest
 
-from members.zhenci.train_e2 import CANDIDATES, select_best_config
+from members.zhenci.e2.train_e2 import CANDIDATES, select_best_config
 
 
 class ZhenciE2Tests(unittest.TestCase):

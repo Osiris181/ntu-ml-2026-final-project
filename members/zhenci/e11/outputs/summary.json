@@ -1,0 +1,79 @@
+{
+  "experiment": "E11 conditional expected-return decision",
+  "control": "E3 fixed TAIEX threshold on archived E1 full-sample F0 probabilities",
+  "reference_seed": 42,
+  "folds": [
+    "2023",
+    "2024",
+    "2025"
+  ],
+  "arms": [
+    "e1",
+    "e3",
+    "previous_direction_candidate",
+    "e11_direction_only",
+    "e11_constant_payoffs",
+    "e11_conditional_payoffs"
+  ],
+  "f0_features": [
+    "intraday_return_1d",
+    "daily_return_1d",
+    "momentum_5d",
+    "price_range_1d",
+    "relative_volume_20d",
+    "relative_amount_20d",
+    "trade_size_ratio_20d",
+    "foreign_ownership",
+    "foreign_net_buy_ratio",
+    "trust_net_buy_ratio",
+    "rsi_normalized",
+    "sma_distance",
+    "macd_normalized",
+    "atr_normalized",
+    "bb_width",
+    "vix_normalized",
+    "nasdaq_return",
+    "sp500_return",
+    "taiex_return",
+    "stock_id",
+    "day_of_week"
+  ],
+  "component_design": "archived E1 p(up); XGBoost P(flat|not up), E[gain|up], E[loss|down]",
+  "decision_formula": "p_up*mu_gain - (1-p_up)*(1-q_flat_given_nonup)*mu_loss > 0",
+  "cap_quantile_training_only": 0.995,
+  "component_params": {
+    "objective": "binary:logistic",
+    "eval_metric": "logloss",
+    "tree_method": "hist",
+    "max_depth": 6,
+    "eta": 0.3,
+    "subsample": 1.0,
+    "colsample_bytree": 1.0,
+    "lambda": 1.0,
+    "alpha": 0.0,
+    "nthread": 4
+  },
+  "num_boost_round": 100,
+  "versions": {
+    "python": "3.13.5",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "xgboost": "3.4.1"
+  },
+  "equal_year_mean_official_scores": {
+    "e1": 0.0005814517440399931,
+    "e3": 0.0006404995381490876,
+    "previous_direction_candidate": -3.399571851473522e-05,
+    "e11_direction_only": 0.0005814517440399931,
+    "e11_constant_payoffs": 0.0006079309060868216,
+    "e11_conditional_payoffs": 0.0006391499648053058
+  },
+  "input_sha256": {
+    "f0": "baf60ccab4d772ef23bb46fece2cbb56c98fc5168edc985967f1c45799f21101",
+    "market_100_csv_combined": "d2ddf48023c430fb155d2eaef032591c88b7606336eac64d9d2ffaa3f68b115b",
+    "stock_metadata": "3d95ced2e3fd7e6dc7815a4fb927b8bfe66e89f2390e3c23811d712e0a37fe79",
+    "saved_e1_predictions": "fe255cb3ded917bcdda13440647347b28aaca810858fc31c3255e3e8864accf9",
+    "e1_summary": "7a3652ddcf6f429f3e212bfe68b07d9d0359ed3748ab719a96977a11c5cf69ef",
+    "e3_summary": "24f06993203c719706e1ecb8050f018c023e197cd3efdb4f449a69fc1eeae2a9"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "candidate_rule": "prior per-stock completed session adjusted close > adjusted open; ties predict 0",
+  "candidate_is_official_previous_day_definition": "unverified",
+  "e3_cv_selected_rule": {
+    "config_id": "e3_taiex_negative_0525_nonnegative_0475",
+    "negative": 0.525,
+    "nonnegative": 0.475,
+    "missing": 0.5
+  },
+  "cv_seeds_same_probabilities": true,
+  "period_rows": {
+    "2023": 11950,
+    "2024": 12099,
+    "2025": 12140,
+    "holdout_jan_may_2026": 4750,
+    "phase1_jun_sep_2026": 4200
+  },
+  "phase1_template_dates": [
+    "2026-06-01",
+    "2026-09-30"
+  ],
+  "phase1_template_stocks": 50
+}

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="560" viewBox="0 0 620 560">
+<rect width="100%" height="100%" fill="white"/>
+<text x="70" y="26" font-size="17" font-family="Arial">Frozen-model direction calibration</text>
+<line x1="70.0" y1="55" x2="70.0" y2="475" stroke="#eeeeee"/>
+<line x1="70" y1="475.0" x2="490" y2="475.0" stroke="#eeeeee"/>
+<text x="60.0" y="493" font-size="11" font-family="Arial">0.0</text>
+<text x="40" y="479.0" font-size="11" font-family="Arial">0.0</text>
+<line x1="154.0" y1="55" x2="154.0" y2="475" stroke="#eeeeee"/>
+<line x1="70" y1="391.0" x2="490" y2="391.0" stroke="#eeeeee"/>
+<text x="144.0" y="493" font-size="11" font-family="Arial">0.2</text>
+<text x="40" y="395.0" font-size="11" font-family="Arial">0.2</text>
+<line x1="238.0" y1="55" x2="238.0" y2="475" stroke="#eeeeee"/>
+<line x1="70" y1="307.0" x2="490" y2="307.0" stroke="#eeeeee"/>
+<text x="228.0" y="493" font-size="11" font-family="Arial">0.4</text>
+<text x="40" y="311.0" font-size="11" font-family="Arial">0.4</text>
+<line x1="322.0" y1="55" x2="322.0" y2="475" stroke="#eeeeee"/>
+<line x1="70" y1="223.0" x2="490" y2="223.0" stroke="#eeeeee"/>
+<text x="312.0" y="493" font-size="11" font-family="Arial">0.6</text>
+<text x="40" y="227.0" font-size="11" font-family="Arial">0.6</text>
+<line x1="406.0" y1="55" x2="406.0" y2="475" stroke="#eeeeee"/>
+<line x1="70" y1="139.0" x2="490" y2="139.0" stroke="#eeeeee"/>
+<text x="396.0" y="493" font-size="11" font-family="Arial">0.8</text>
+<text x="40" y="143.0" font-size="11" font-family="Arial">0.8</text>
+<line x1="490.0" y1="55" x2="490.0" y2="475" stroke="#eeeeee"/>
+<line x1="70" y1="55.0" x2="490" y2="55.0" stroke="#eeeeee"/>
+<text x="480.0" y="493" font-size="11" font-family="Arial">1.0</text>
+<text x="40" y="59.0" font-size="11" font-family="Arial">1.0</text>
+<line x1="70" y1="475" x2="490" y2="55" stroke="#777" stroke-dasharray="5 4"/>
+<circle cx="111.8" cy="475.0" r="3.0" fill="#2071a7" fill-opacity="0.72"/>
+<circle cx="138.7" cy="357.4" r="3.0" fill="#2071a7" fill-opacity="0.72"/>
+<circle cx="181.3" cy="295.5" r="6.5" fill="#2071a7" fill-opacity="0.72"/>
+<circle cx="219.6" cy="309.5" r="11.0" fill="#2071a7" fill-opacity="0.72"/>
+<circle cx="258.6" cy="296.1" r="11.0" fill="#2071a7" fill-opacity="0.72"/>
+<circle cx="297.5" cy="289.3" r="10.6" fill="#2071a7" fill-opacity="0.72"/>
+<circle cx="337.2" cy="276.7" r="5.7" fill="#2071a7" fill-opacity="0.72"/>
+<circle cx="380.8" cy="281.7" r="3.0" fill="#2071a7" fill-opacity="0.72"/>
+<circle cx="423.4" cy="163.9" r="3.0" fill="#2071a7" fill-opacity="0.72"/>
+<circle cx="80" cy="525" r="5" fill="#2071a7"/>
+<text x="90" y="529" font-size="11" font-family="Arial">holdout_jan_may</text>
+<circle cx="104.5" cy="265.0" r="3.0" fill="#c24c32" fill-opacity="0.72"/>
+<circle cx="136.0" cy="241.7" r="3.3" fill="#c24c32" fill-opacity="0.72"/>
+<circle cx="180.2" cy="255.3" r="6.6" fill="#c24c32" fill-opacity="0.72"/>
+<circle cx="219.7" cy="277.7" r="11.0" fill="#c24c32" fill-opacity="0.72"/>
+<circle cx="257.5" cy="279.0" r="11.0" fill="#c24c32" fill-opacity="0.72"/>
+<circle cx="297.8" cy="284.9" r="8.8" fill="#c24c32" fill-opacity="0.72"/>
+<circle cx="338.5" cy="283.8" r="5.1" fill="#c24c32" fill-opacity="0.72"/>
+<circle cx="377.6" cy="269.9" r="3.0" fill="#c24c32" fill-opacity="0.72"/>
+<circle cx="416.1" cy="415.0" r="3.0" fill="#c24c32" fill-opacity="0.72"/>
+<circle cx="453.1" cy="265.0" r="3.0" fill="#c24c32" fill-opacity="0.72"/>
+<circle cx="225" cy="525" r="5" fill="#c24c32"/>
+<text x="235" y="529" font-size="11" font-family="Arial">phase1_jun_sep</text>
+<circle cx="138.8" cy="55.0" r="3.0" fill="#8059a6" fill-opacity="0.72"/>
+<circle cx="181.8" cy="182.5" r="3.0" fill="#8059a6" fill-opacity="0.72"/>
+<circle cx="220.4" cy="270.6" r="5.8" fill="#8059a6" fill-opacity="0.72"/>
+<circle cx="257.8" cy="260.3" r="5.5" fill="#8059a6" fill-opacity="0.72"/>
+<circle cx="295.5" cy="263.0" r="3.4" fill="#8059a6" fill-opacity="0.72"/>
+<circle cx="334.8" cy="317.5" r="3.0" fill="#8059a6" fill-opacity="0.72"/>
+<circle cx="388.6" cy="55.0" r="3.0" fill="#8059a6" fill-opacity="0.72"/>
+<circle cx="370" cy="525" r="5" fill="#8059a6"/>
+<text x="380" y="529" font-size="11" font-family="Arial">oct_01_22</text>
+<text x="195" y="504" font-size="12" font-family="Arial">Mean predicted probability</text>
+<text x="16" y="330" transform="rotate(-90 16 330)" font-size="12" font-family="Arial">Observed up fraction</text>
+</svg>

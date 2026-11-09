@@ -2,8 +2,8 @@ import unittest
 
 import pandas as pd
 
-from members.zhenci.predict_e1 import require_template_features
-from members.zhenci.save_e1 import holdout_training_rows
+from members.zhenci.e1.predict_e1 import require_template_features
+from members.zhenci.e1.save_e1 import holdout_training_rows
 from shared.splits import HOLDOUT
 
 

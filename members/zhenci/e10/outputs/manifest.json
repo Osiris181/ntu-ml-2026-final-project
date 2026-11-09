@@ -1,0 +1,30 @@
+{
+  "periods": [
+    "2023",
+    "2024",
+    "2025",
+    "holdout_jan_may_2026",
+    "phase1_jun_sep_2026",
+    "oct_2026_01_22"
+  ],
+  "frozen_periods": [
+    "holdout_jan_may_2026",
+    "phase1_jun_sep_2026",
+    "oct_2026_01_22"
+  ],
+  "excluded_invalid_date": "2026-10-23 and subsequent October/November dates",
+  "e3_rule": {
+    "config_id": "e3_taiex_negative_0525_nonnegative_0475",
+    "negative": 0.525,
+    "nonnegative": 0.475,
+    "missing": 0.5
+  },
+  "input_sha256": {
+    "cv_probabilities": "fe255cb3ded917bcdda13440647347b28aaca810858fc31c3255e3e8864accf9",
+    "holdout_probabilities": "47c3c9c872d170aa11616d73b6ea8427d18f17868490b410e1ddaba97d1ea483",
+    "phase1_probabilities": "48381220ea7e6f0f228cce8badb8ead683c666cb1ea13b19d1fab1ef2257cc4f",
+    "original_f0": "baf60ccab4d772ef23bb46fece2cbb56c98fc5168edc985967f1c45799f21101",
+    "updated_f0": "d3bc8d50b0008de6aca8a0f87036240002056b739d8916cca926a784f47bf88c",
+    "frozen_artifact": "7abbecfaabee2325c8d75c5f95a6b755f9be316162a9065937a5b5e2e5c28540"
+  }
+}

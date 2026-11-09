@@ -1,0 +1,34 @@
+{
+  "candidate_distances": [
+    0.0,
+    0.01,
+    0.025,
+    0.05
+  ],
+  "choices_using_only_earlier_oos_years": {
+    "2023": 0.0,
+    "2024": 0.01,
+    "2025": 0.01
+  },
+  "final_distance_selected_from_2023_to_2025": 0.01,
+  "e3_fixed_rule": {
+    "config_id": "e3_taiex_negative_0525_nonnegative_0475",
+    "negative": 0.525,
+    "nonnegative": 0.475,
+    "missing": 0.5
+  },
+  "reserved_period": "2026-10-01 to 2026-10-22; 15 sessions; excludes 2026-10-23 sentinel",
+  "bootstrap": {
+    "type": "paired circular moving-block by trading day",
+    "block_sessions": 5,
+    "draws": 5000,
+    "seed": 42
+  },
+  "inputs_sha256": {
+    "saved_cv_predictions": "fe255cb3ded917bcdda13440647347b28aaca810858fc31c3255e3e8864accf9",
+    "e3_summary": "24f06993203c719706e1ecb8050f018c023e197cd3efdb4f449a69fc1eeae2a9",
+    "historical_f0": "baf60ccab4d772ef23bb46fece2cbb56c98fc5168edc985967f1c45799f21101",
+    "updated_f0": "d3bc8d50b0008de6aca8a0f87036240002056b739d8916cca926a784f47bf88c",
+    "frozen_artifact_manifest": "7abbecfaabee2325c8d75c5f95a6b755f9be316162a9065937a5b5e2e5c28540"
+  }
+}

@@ -5,7 +5,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from members.zhenci.train_e2_return_regression import (
+from members.zhenci.e2.train_e2_return_regression import (
     binary_from_regression, comparison_params, training_intraday_returns,
 )
 

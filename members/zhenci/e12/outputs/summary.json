@@ -1,0 +1,59 @@
+{
+  "experiment": "E12 fixed one-layer LSTM sequence model",
+  "architecture": {
+    "window": 20,
+    "numeric_features": [
+      "intraday_return_1d",
+      "daily_return_1d",
+      "momentum_5d",
+      "price_range_1d",
+      "relative_volume_20d",
+      "relative_amount_20d",
+      "trade_size_ratio_20d",
+      "foreign_ownership",
+      "foreign_net_buy_ratio",
+      "trust_net_buy_ratio",
+      "rsi_normalized",
+      "sma_distance",
+      "macd_normalized",
+      "atr_normalized",
+      "bb_width",
+      "vix_normalized",
+      "nasdaq_return",
+      "sp500_return",
+      "taiex_return"
+    ],
+    "context": "prediction-day stock ID and weekday one-hot",
+    "hidden_size": 32,
+    "layers": 1,
+    "head_dropout": 0.2
+  },
+  "training": {
+    "epochs_fixed": 6,
+    "batch_size": 1024,
+    "loss": "BCEWithLogitsLoss",
+    "optimizer": "Adam",
+    "initial_learning_rate": 0.001,
+    "seed": 42,
+    "device": "cpu",
+    "gradient_clip_norm": 1.0,
+    "outer_validation_epochs": "diagnostic only; final epoch always used"
+  },
+  "equal_year_mean_scores": {
+    "e1": 0.0005814517440399931,
+    "e3": 0.0006404995381490876,
+    "e12": 0.000655305931752325
+  },
+  "input_sha256": {
+    "f0": "baf60ccab4d772ef23bb46fece2cbb56c98fc5168edc985967f1c45799f21101",
+    "e1_predictions": "fe255cb3ded917bcdda13440647347b28aaca810858fc31c3255e3e8864accf9",
+    "e1_summary": "7a3652ddcf6f429f3e212bfe68b07d9d0359ed3748ab719a96977a11c5cf69ef",
+    "e3_summary": "24f06993203c719706e1ecb8050f018c023e197cd3efdb4f449a69fc1eeae2a9"
+  },
+  "versions": {
+    "python": "3.13.5",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "torch": "2.15.0+cpu"
+  }
+}

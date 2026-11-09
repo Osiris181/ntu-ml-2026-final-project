@@ -5,7 +5,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from members.zhenci.features_e2 import EXTRA_FEATURES, F1Preprocessor, build_f1_dataset
+from members.zhenci.e2.features_e2 import EXTRA_FEATURES, F1Preprocessor, build_f1_dataset
 from shared.preprocessing import BaselinePreprocessor, F0_FEATURES, NUMERIC_FEATURES
 
 

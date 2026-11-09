@@ -5,7 +5,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from members.zhenci.train_e2_weighted import training_return_weights
+from members.zhenci.e2.train_e2_weighted import training_return_weights
 
 
 class ZhenciE2WeightedTests(unittest.TestCase):

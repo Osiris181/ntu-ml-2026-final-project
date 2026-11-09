@@ -1,0 +1,13 @@
+period,feature,reference,train_category_count,eval_category_count,unseen_eval_fraction,total_variation_distance
+2023,stock_id,target_50_stocks,50,50,0.0,0.00039199673336054973
+2023,day_of_week,target_50_stocks,5,5,0.0,0.00900341869536024
+2024,stock_id,target_50_stocks,50,50,0.0,0.00029908504571968426
+2024,day_of_week,target_50_stocks,5,5,0.0,0.029498758076311027
+2025,stock_id,target_50_stocks,50,50,0.0,0.000647269961357241
+2025,day_of_week,target_50_stocks,5,5,0.0,0.018676064931680197
+holdout_jan_may_2026,stock_id,target_50_stocks,50,50,0.0,0.0003137513027261108
+holdout_jan_may_2026,day_of_week,target_50_stocks,5,5,0.0,0.01570734059106957
+phase1_jun_sep_2026,stock_id,target_50_stocks,50,50,0.0,0.0003137513027261108
+phase1_jun_sep_2026,day_of_week,target_50_stocks,5,5,0.0,0.02798804234545553
+oct_2026_01_22,stock_id,target_50_stocks,50,50,0.0,0.0003137513027261108
+oct_2026_01_22,day_of_week,target_50_stocks,5,5,0.0,0.06982886292578573

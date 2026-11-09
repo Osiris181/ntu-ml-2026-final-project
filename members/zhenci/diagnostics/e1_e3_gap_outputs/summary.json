@@ -1,0 +1,35 @@
+{
+  "template_dates": [
+    "2026-06-01",
+    "2026-09-30"
+  ],
+  "template_stocks": 50,
+  "template_days": 84,
+  "realized_rows": 4200,
+  "original_market_last_date": "2026-08-31",
+  "updated_market_first_date": "2026-09-01",
+  "f0_rebuilt_template_numeric_fields_match": true,
+  "stock_lag_source_violations": 0,
+  "global_strict_prior_or_staleness_violations": 0,
+  "preprocessing_refit_on_training_rows_matches_frozen_state": true,
+  "submitted_predictions_mismatching_frozen_model": 0,
+  "artifact_manifest_sha256": "7abbecfaabee2325c8d75c5f95a6b755f9be316162a9065937a5b5e2e5c28540",
+  "updated_f0_sha256": "d3bc8d50b0008de6aca8a0f87036240002056b739d8916cca926a784f47bf88c",
+  "e1_submission_sha256": "72eb613bca388d9243e40ab912a0e8faaa579b8c362e6b91a4f0ae373fc9369d",
+  "e3_submission_sha256": "9477505af9c3b4fa3d363e564b1d06e3b2328ea4bd9dc387f928019254b94e6a",
+  "e1": {
+    "official_score": -0.00031790552411405944,
+    "accuracy": 0.5061904761904762,
+    "n_eval": 4200
+  },
+  "e3": {
+    "official_score": -6.194016349195797e-05,
+    "accuracy": 0.5133333333333333,
+    "n_eval": 4200
+  },
+  "e3_minus_e1_official_score": 0.00025596536062210144,
+  "disagreements": 254,
+  "e3_negative_days": 41,
+  "e3_negative_daily_loss_top5_share": 0.3117748830906387,
+  "e3_negative_daily_loss_top10_share": 0.531066018808263
+}

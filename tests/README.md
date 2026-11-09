@@ -12,6 +12,16 @@
 
 [`test_zhenci_e2_return_regression.py`](test_zhenci_e2_return_regression.py) checks the XGBoost E2 return target and conversion of regression output into binary predictions without fitting a model.
 
+[`test_zhenci_e3_regime.py`](test_zhenci_e3_regime.py) checks the E3 training-universe filter, fold-cutoff recency weights, and refusal to save an alternative that did not beat the E1 control. It does not fit a model.
+
+[`test_zhenci_e3_variants.py`](test_zhenci_e3_variants.py) checks market-relative features, fold-fitted preprocessing and restoration, and chronological threshold selection without fitting a model.
+
+[`test_zhenci_e3_market_regime.py`](test_zhenci_e3_market_regime.py) checks the prior-TAIEX threshold rule, its missing-value fallback, selection using only earlier validation years, and exporter rejection of mismatched saved rules. It does not fit a model.
+
+[`test_zhenci_e4_features.py`](test_zhenci_e4_features.py) checks E4's completed-session rolling windows, missing prices, historical/updated feature consistency, exact keys, and training-fold-only F2 preprocessing.
+
+[`test_zhenci_e4_runner.py`](test_zhenci_e4_runner.py) checks the pinned E1 configuration and E3 rule, saved control probabilities and exact keys, and score reproduction guards without fitting a model.
+
 Run from the repository root:
 
 ```text
