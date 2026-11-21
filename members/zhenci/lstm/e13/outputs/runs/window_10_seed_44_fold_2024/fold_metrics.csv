@@ -1,0 +1,2 @@
+official_score,accuracy,n_eval,fold,window,seed,predicted_up_rate,mean_probability,median_probability,p10_probability,p90_probability,training_and_curve_seconds,final_inference_seconds,training_sequences
+0.0005450986782847081,0.5478965203735846,12099,2024,10,44,0.1741466236879081,0.45263893639600933,0.453081876039505,0.3876124918460846,0.5170570611953735,15.612754299996595,0.033905500000400934,95464

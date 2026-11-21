@@ -1,0 +1,21 @@
+{
+  "window": 10,
+  "seed": 43,
+  "fold": "2023",
+  "input_hashes": {
+    "original_f0": "baf60ccab4d772ef23bb46fece2cbb56c98fc5168edc985967f1c45799f21101",
+    "e12_summary": "5d44970e658320cdabf7c68aaa723b9c3924cb254abdf93170e1dcae83d6159b",
+    "e12_predictions": "e7972ea6dc085f5e480d306b6c74871c7902deead6fd03bce6b289ff00637d6e",
+    "e12_curves": "69800744ed8a512d490a0a9e8fc1fa1a30d4c5fd7e5027aef88c632c8e1c0af7",
+    "e12_metrics": "9fb2cded20556186a9903233c5931f9990b3abfd5ab8d33f7c63bbc06eb1148a",
+    "e12_code": "4d2f2e4f03716b28adff7edf154e850f7f297d11a4c84281e401620f7d1177bd",
+    "shared_preprocessing": "9c1060fbde2660bb18638d3b7d6728927bf167e59eb110ac172d7fca59be4d87",
+    "shared_features": "731407ed6b478ea2201a90e259303d7aadb9c4f733e17cb478e3b8fe5e9fa39f"
+  },
+  "file_sha256": {
+    "fold_metrics.csv": "e16265c9c04fce051ab56d48efee374ecbe43825a65b4a9bf0302e90d822ddbc",
+    "learning_curves.csv": "99c74c928252a59bb274ea4d1ee0a6c50739cb48424df88d4ad78c8631e099fa",
+    "validation_predictions.csv": "72e565ddbe2ef6a3841d46f414b25c885d8465b2fe0e8a9cea9b5d3820706622",
+    "model.pt": "825c5839b308e0158b6fae8f2f630b2107375a405b068b4eb983bf85afecd46c"
+  }
+}

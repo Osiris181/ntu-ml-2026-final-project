@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="415" viewBox="0 0 1080 415">
+<rect width="100%" height="100%" fill="white"/>
+<text x="25" y="27" font-family="Arial" font-size="18">E13 seed 42: fixed six-epoch BCE curves</text>
+<text x="65" y="51" font-family="Arial" font-size="15">Validation 2023</text>
+<line x1="65" y1="345.0" x2="350" y2="345.0" stroke="#e7e7e7"/>
+<text x="19" y="349.0" font-family="Arial" font-size="10">0.674</text>
+<line x1="65" y1="275.0" x2="350" y2="275.0" stroke="#e7e7e7"/>
+<text x="19" y="279.0" font-family="Arial" font-size="10">0.678</text>
+<line x1="65" y1="205.0" x2="350" y2="205.0" stroke="#e7e7e7"/>
+<text x="19" y="209.0" font-family="Arial" font-size="10">0.683</text>
+<line x1="65" y1="135.0" x2="350" y2="135.0" stroke="#e7e7e7"/>
+<text x="19" y="139.0" font-family="Arial" font-size="10">0.687</text>
+<line x1="65" y1="65.0" x2="350" y2="65.0" stroke="#e7e7e7"/>
+<text x="19" y="69.0" font-family="Arial" font-size="10">0.691</text>
+<text x="62.0" y="363" font-family="Arial" font-size="10">1</text>
+<text x="119.0" y="363" font-family="Arial" font-size="10">2</text>
+<text x="176.0" y="363" font-family="Arial" font-size="10">3</text>
+<text x="233.0" y="363" font-family="Arial" font-size="10">4</text>
+<text x="290.0" y="363" font-family="Arial" font-size="10">5</text>
+<text x="347.0" y="363" font-family="Arial" font-size="10">6</text>
+<polyline points="65.0,167.3 122.0,204.2 179.0,236.5 236.0,267.4 293.0,296.1 350.0,324.7" fill="none" stroke="#2d8c82" stroke-width="2.2"/>
+<polyline points="65.0,97.8 122.0,99.8 179.0,98.0 236.0,94.4 293.0,91.8 350.0,91.5" fill="none" stroke="#2d8c82" stroke-width="2.2" stroke-dasharray="6 4"/>
+<polyline points="65.0,167.7 122.0,209.0 179.0,244.0 236.0,272.5 293.0,298.8 350.0,327.8" fill="none" stroke="#ce7226" stroke-width="2.2"/>
+<polyline points="65.0,99.1 122.0,105.6 179.0,112.6 236.0,100.2 293.0,92.5 350.0,90.9" fill="none" stroke="#ce7226" stroke-width="2.2" stroke-dasharray="6 4"/>
+<polyline points="65.0,167.9 122.0,211.2 179.0,246.4 236.0,278.5 293.0,303.6 350.0,328.7" fill="none" stroke="#405fa6" stroke-width="2.2"/>
+<polyline points="65.0,99.2 122.0,106.8 179.0,109.6 236.0,90.8 293.0,81.3 350.0,89.4" fill="none" stroke="#405fa6" stroke-width="2.2" stroke-dasharray="6 4"/>
+<text x="405" y="51" font-family="Arial" font-size="15">Validation 2024</text>
+<line x1="405" y1="345.0" x2="690" y2="345.0" stroke="#e7e7e7"/>
+<text x="359" y="349.0" font-family="Arial" font-size="10">0.674</text>
+<line x1="405" y1="275.0" x2="690" y2="275.0" stroke="#e7e7e7"/>
+<text x="359" y="279.0" font-family="Arial" font-size="10">0.678</text>
+<line x1="405" y1="205.0" x2="690" y2="205.0" stroke="#e7e7e7"/>
+<text x="359" y="209.0" font-family="Arial" font-size="10">0.683</text>
+<line x1="405" y1="135.0" x2="690" y2="135.0" stroke="#e7e7e7"/>
+<text x="359" y="139.0" font-family="Arial" font-size="10">0.687</text>
+<line x1="405" y1="65.0" x2="690" y2="65.0" stroke="#e7e7e7"/>
+<text x="359" y="69.0" font-family="Arial" font-size="10">0.691</text>
+<text x="402.0" y="363" font-family="Arial" font-size="10">1</text>
+<text x="459.0" y="363" font-family="Arial" font-size="10">2</text>
+<text x="516.0" y="363" font-family="Arial" font-size="10">3</text>
+<text x="573.0" y="363" font-family="Arial" font-size="10">4</text>
+<text x="630.0" y="363" font-family="Arial" font-size="10">5</text>
+<text x="687.0" y="363" font-family="Arial" font-size="10">6</text>
+<polyline points="405.0,166.8 462.0,198.3 519.0,227.8 576.0,249.7 633.0,273.1 690.0,295.1" fill="none" stroke="#2d8c82" stroke-width="2.2"/>
+<polyline points="405.0,97.9 462.0,114.0 519.0,108.3 576.0,105.5 633.0,100.1 690.0,88.8" fill="none" stroke="#2d8c82" stroke-width="2.2" stroke-dasharray="6 4"/>
+<polyline points="405.0,168.0 462.0,203.0 519.0,230.7 576.0,252.7 633.0,272.8 690.0,296.6" fill="none" stroke="#ce7226" stroke-width="2.2"/>
+<polyline points="405.0,98.9 462.0,120.0 519.0,106.4 576.0,107.6 633.0,105.4 690.0,92.1" fill="none" stroke="#ce7226" stroke-width="2.2" stroke-dasharray="6 4"/>
+<polyline points="405.0,168.4 462.0,204.6 519.0,233.6 576.0,259.0 633.0,278.4 690.0,299.4" fill="none" stroke="#405fa6" stroke-width="2.2"/>
+<polyline points="405.0,99.2 462.0,121.4 519.0,109.0 576.0,107.2 633.0,104.8 690.0,87.0" fill="none" stroke="#405fa6" stroke-width="2.2" stroke-dasharray="6 4"/>
+<text x="745" y="51" font-family="Arial" font-size="15">Validation 2025</text>
+<line x1="745" y1="345.0" x2="1030" y2="345.0" stroke="#e7e7e7"/>
+<text x="699" y="349.0" font-family="Arial" font-size="10">0.674</text>
+<line x1="745" y1="275.0" x2="1030" y2="275.0" stroke="#e7e7e7"/>
+<text x="699" y="279.0" font-family="Arial" font-size="10">0.678</text>
+<line x1="745" y1="205.0" x2="1030" y2="205.0" stroke="#e7e7e7"/>
+<text x="699" y="209.0" font-family="Arial" font-size="10">0.683</text>
+<line x1="745" y1="135.0" x2="1030" y2="135.0" stroke="#e7e7e7"/>
+<text x="699" y="139.0" font-family="Arial" font-size="10">0.687</text>
+<line x1="745" y1="65.0" x2="1030" y2="65.0" stroke="#e7e7e7"/>
+<text x="699" y="69.0" font-family="Arial" font-size="10">0.691</text>
+<text x="742.0" y="363" font-family="Arial" font-size="10">1</text>
+<text x="799.0" y="363" font-family="Arial" font-size="10">2</text>
+<text x="856.0" y="363" font-family="Arial" font-size="10">3</text>
+<text x="913.0" y="363" font-family="Arial" font-size="10">4</text>
+<text x="970.0" y="363" font-family="Arial" font-size="10">5</text>
+<text x="1027.0" y="363" font-family="Arial" font-size="10">6</text>
+<polyline points="745.0,176.6 802.0,207.2 859.0,232.0 916.0,250.3 973.0,273.7 1030.0,296.4" fill="none" stroke="#2d8c82" stroke-width="2.2"/>
+<polyline points="745.0,179.0 802.0,190.8 859.0,187.4 916.0,193.1 973.0,195.4 1030.0,178.2" fill="none" stroke="#2d8c82" stroke-width="2.2" stroke-dasharray="6 4"/>
+<polyline points="745.0,177.9 802.0,211.8 859.0,237.3 916.0,259.2 973.0,281.9 1030.0,302.0" fill="none" stroke="#ce7226" stroke-width="2.2"/>
+<polyline points="745.0,182.4 802.0,193.9 859.0,192.3 916.0,195.5 973.0,189.5 1030.0,175.5" fill="none" stroke="#ce7226" stroke-width="2.2" stroke-dasharray="6 4"/>
+<polyline points="745.0,178.4 802.0,214.2 859.0,239.9 916.0,260.8 973.0,281.4 1030.0,300.4" fill="none" stroke="#405fa6" stroke-width="2.2"/>
+<polyline points="745.0,183.0 802.0,195.4 859.0,192.4 916.0,196.9 973.0,193.7 1030.0,180.9" fill="none" stroke="#405fa6" stroke-width="2.2" stroke-dasharray="6 4"/>
+<line x1="155" y1="395" x2="177" y2="395" stroke="#2d8c82" stroke-width="3"/>
+<text x="183" y="399" font-family="Arial" font-size="11">5 sessions</text>
+<line x1="295" y1="395" x2="317" y2="395" stroke="#ce7226" stroke-width="3"/>
+<text x="323" y="399" font-family="Arial" font-size="11">10 sessions</text>
+<line x1="435" y1="395" x2="457" y2="395" stroke="#405fa6" stroke-width="3"/>
+<text x="463" y="399" font-family="Arial" font-size="11">20 sessions</text>
+<line x1="605" y1="395" x2="627" y2="395" stroke="#444" stroke-width="2"/>
+<text x="635" y="399" font-family="Arial" font-size="11">Train</text>
+<line x1="701" y1="395" x2="723" y2="395" stroke="#444" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="731" y="399" font-family="Arial" font-size="11">Outer validation (diagnostic)</text>
+</svg>

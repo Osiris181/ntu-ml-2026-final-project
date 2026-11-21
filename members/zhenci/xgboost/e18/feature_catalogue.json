@@ -1,0 +1,1262 @@
+[
+  {
+    "name": "candle_body",
+    "family": "A",
+    "formula": "(C-O)/(H-L)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_high",
+      "etl:adj_low",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 1,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "upper_wick",
+    "family": "A",
+    "formula": "(H-max(O,C))/(H-L)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_high",
+      "etl:adj_low",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 1,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "lower_wick",
+    "family": "A",
+    "formula": "(min(O,C)-L)/(H-L)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_high",
+      "etl:adj_low",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 1,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "close_location",
+    "family": "A",
+    "formula": "(C-L)/(H-L)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_high",
+      "etl:adj_low",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 1,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "open_location",
+    "family": "A",
+    "formula": "(O-L)/(H-L)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_high",
+      "etl:adj_low",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 1,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "overnight_gap_abs",
+    "family": "A",
+    "formula": "abs(q_s)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 2,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "Absolute value of E2's signed gap",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "momentum_3",
+    "family": "A",
+    "formula": "C_s/C_(s-3)-1",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 4,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "momentum_10",
+    "family": "A",
+    "formula": "C_s/C_(s-10)-1",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 11,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "Exact E2 F1 momentum_10d",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "momentum_20",
+    "family": "A",
+    "formula": "C_s/C_(s-20)-1",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 21,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "momentum_60",
+    "family": "A",
+    "formula": "C_s/C_(s-60)-1",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 61,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "intraday_compound_3",
+    "family": "A",
+    "formula": "product of (1+r) over 3 sessions minus 1",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 3,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "E4 uses arithmetic means on 5/20 sessions",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "intraday_compound_5",
+    "family": "A",
+    "formula": "product of (1+r) over 5 sessions minus 1",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 5,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "E4 uses arithmetic means on 5/20 sessions",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "intraday_compound_10",
+    "family": "A",
+    "formula": "product of (1+r) over 10 sessions minus 1",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 10,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "E4 uses arithmetic means on 5/20 sessions",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "intraday_compound_20",
+    "family": "A",
+    "formula": "product of (1+r) over 20 sessions minus 1",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 20,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "E4 uses arithmetic means on 5/20 sessions",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "overnight_compound_3",
+    "family": "A",
+    "formula": "product of (1+q) over 3 sessions minus 1",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 4,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "E4 uses arithmetic means on 5/20 sessions",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "overnight_compound_5",
+    "family": "A",
+    "formula": "product of (1+q) over 5 sessions minus 1",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 6,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "E4 uses arithmetic means on 5/20 sessions",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "overnight_compound_10",
+    "family": "A",
+    "formula": "product of (1+q) over 10 sessions minus 1",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 11,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "E4 uses arithmetic means on 5/20 sessions",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "overnight_compound_20",
+    "family": "A",
+    "formula": "product of (1+q) over 20 sessions minus 1",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 21,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "E4 uses arithmetic means on 5/20 sessions",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "intraday_positive_fraction_5",
+    "family": "A",
+    "formula": "mean(1[r>0], 5)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 5,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "intraday_positive_fraction_10",
+    "family": "A",
+    "formula": "mean(1[r>0], 10)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 10,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "intraday_positive_fraction_20",
+    "family": "A",
+    "formula": "mean(1[r>0], 20)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 20,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "ma_distance_5",
+    "family": "B",
+    "formula": "C/mean(C,5)-1",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 5,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "F0 uses supplied SMA of unknown settings",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "ma_distance_10",
+    "family": "B",
+    "formula": "C/mean(C,10)-1",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 10,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "F0 uses supplied SMA of unknown settings",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "ma_distance_20",
+    "family": "B",
+    "formula": "C/mean(C,20)-1",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 20,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "F0 uses supplied SMA of unknown settings",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "ma_distance_60",
+    "family": "B",
+    "formula": "C/mean(C,60)-1",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 60,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "F0 uses supplied SMA of unknown settings",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "rolling_max_distance_10",
+    "family": "B",
+    "formula": "C/max(C,10)-1",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 10,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "rolling_min_distance_10",
+    "family": "B",
+    "formula": "C/min(C,10)-1",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 10,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "rolling_max_distance_20",
+    "family": "B",
+    "formula": "C/max(C,20)-1",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 20,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "rolling_min_distance_20",
+    "family": "B",
+    "formula": "C/min(C,20)-1",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 20,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "rolling_max_distance_60",
+    "family": "B",
+    "formula": "C/max(C,60)-1",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 60,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "rolling_min_distance_60",
+    "family": "B",
+    "formula": "C/min(C,60)-1",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 60,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "log_trend_slope_10",
+    "family": "B",
+    "formula": "OLS slope of log(C) on equal session steps",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 10,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "log_trend_r2_10",
+    "family": "B",
+    "formula": "Squared correlation of log(C) with equal session steps",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 10,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "log_trend_slope_20",
+    "family": "B",
+    "formula": "OLS slope of log(C) on equal session steps",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 20,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "log_trend_r2_20",
+    "family": "B",
+    "formula": "Squared correlation of log(C) with equal session steps",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 20,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "intraday_volatility_5",
+    "family": "B",
+    "formula": "population std(r,5)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 5,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "intraday_volatility_10",
+    "family": "B",
+    "formula": "population std(r,10)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 10,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "intraday_volatility_20",
+    "family": "B",
+    "formula": "population std(r,20)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 20,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "close_volatility_5",
+    "family": "B",
+    "formula": "population std(u,5)",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 6,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "Exact E2 F1 close_volatility_5d",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "close_volatility_10",
+    "family": "B",
+    "formula": "population std(u,10)",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 11,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "close_volatility_20",
+    "family": "B",
+    "formula": "population std(u,20)",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 21,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "downside_semideviation_10",
+    "family": "B",
+    "formula": "sqrt(mean(min(u,0)^2,10))",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 11,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "downside_semideviation_20",
+    "family": "B",
+    "formula": "sqrt(mean(min(u,0)^2,20))",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 21,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "mean_normalized_range_5",
+    "family": "B",
+    "formula": "mean((H-L)/C,5)",
+    "raw_columns": [
+      "etl:adj_high",
+      "etl:adj_low",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 5,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "Rolling mean of F0 price_range_1d",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "mean_normalized_range_10",
+    "family": "B",
+    "formula": "mean((H-L)/C,10)",
+    "raw_columns": [
+      "etl:adj_high",
+      "etl:adj_low",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 10,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "Rolling mean of F0 price_range_1d",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "mean_normalized_range_20",
+    "family": "B",
+    "formula": "mean((H-L)/C,20)",
+    "raw_columns": [
+      "etl:adj_high",
+      "etl:adj_low",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 20,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "Rolling mean of F0 price_range_1d",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "mean_normalized_range_30",
+    "family": "B",
+    "formula": "mean((H-L)/C,30)",
+    "raw_columns": [
+      "etl:adj_high",
+      "etl:adj_low",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 30,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "Rolling mean of F0 price_range_1d",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "normalized_atr_5",
+    "family": "B",
+    "formula": "mean(TR,5)/C_s",
+    "raw_columns": [
+      "etl:adj_high",
+      "etl:adj_low",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 6,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "F0 uses supplied ATR of unknown settings",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "normalized_atr_10",
+    "family": "B",
+    "formula": "mean(TR,10)/C_s",
+    "raw_columns": [
+      "etl:adj_high",
+      "etl:adj_low",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 11,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "F0 uses supplied ATR of unknown settings",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "normalized_atr_20",
+    "family": "B",
+    "formula": "mean(TR,20)/C_s",
+    "raw_columns": [
+      "etl:adj_high",
+      "etl:adj_low",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 21,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "F0 uses supplied ATR of unknown settings",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "volatility_ratio_5_20",
+    "family": "B",
+    "formula": "std(u,5)/std(u,20)",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 21,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "volatility_ratio_10_60",
+    "family": "B",
+    "formula": "std(u,10)/std(u,60)",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 61,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "relative_volume_5",
+    "family": "C",
+    "formula": "V/mean(V,5)",
+    "raw_columns": [
+      "price:成交股數"
+    ],
+    "lookback_sessions": 5,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "F0 uses a 20-session window",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "relative_volume_10",
+    "family": "C",
+    "formula": "V/mean(V,10)",
+    "raw_columns": [
+      "price:成交股數"
+    ],
+    "lookback_sessions": 10,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "F0 uses a 20-session window",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "relative_volume_60",
+    "family": "C",
+    "formula": "V/mean(V,60)",
+    "raw_columns": [
+      "price:成交股數"
+    ],
+    "lookback_sessions": 60,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "F0 uses a 20-session window",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "relative_amount_5",
+    "family": "C",
+    "formula": "A/mean(A,5)",
+    "raw_columns": [
+      "price:成交金額"
+    ],
+    "lookback_sessions": 5,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "Different window from F0",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "relative_amount_20",
+    "family": "C",
+    "formula": "A/mean(A,20)",
+    "raw_columns": [
+      "price:成交金額"
+    ],
+    "lookback_sessions": 20,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": false,
+    "overlap": "Exact F0 relative_amount_20d",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "volume_cv_10",
+    "family": "C",
+    "formula": "std(V,10)/mean(V,10)",
+    "raw_columns": [
+      "price:成交股數"
+    ],
+    "lookback_sessions": 10,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "return_volume_corr_10",
+    "family": "C",
+    "formula": "Pearson corr(u,V) over 10 sessions",
+    "raw_columns": [
+      "etl:adj_close",
+      "price:成交股數"
+    ],
+    "lookback_sessions": 11,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "amihud_10",
+    "family": "C",
+    "formula": "mean(abs(u)/A,10) per reported traded-amount unit",
+    "raw_columns": [
+      "etl:adj_close",
+      "price:成交金額"
+    ],
+    "lookback_sessions": 11,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "volume_cv_20",
+    "family": "C",
+    "formula": "std(V,20)/mean(V,20)",
+    "raw_columns": [
+      "price:成交股數"
+    ],
+    "lookback_sessions": 20,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "return_volume_corr_20",
+    "family": "C",
+    "formula": "Pearson corr(u,V) over 20 sessions",
+    "raw_columns": [
+      "etl:adj_close",
+      "price:成交股數"
+    ],
+    "lookback_sessions": 21,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "amihud_20",
+    "family": "C",
+    "formula": "mean(abs(u)/A,20) per reported traded-amount unit",
+    "raw_columns": [
+      "etl:adj_close",
+      "price:成交金額"
+    ],
+    "lookback_sessions": 21,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "amount_per_transaction",
+    "family": "C",
+    "formula": "A/T",
+    "raw_columns": [
+      "price:成交金額",
+      "price:成交筆數"
+    ],
+    "lookback_sessions": 1,
+    "scope": "stock",
+    "availability": "Latest same-stock session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "F0 trade size uses shares per transaction",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "market_breadth",
+    "family": "D",
+    "formula": "mean across stocks of 1[r>0]",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 1,
+    "scope": "market",
+    "availability": "Latest supplied-universe session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "market_intraday_mean",
+    "family": "D",
+    "formula": "cross-sectional mean(r)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 1,
+    "scope": "market",
+    "availability": "Latest supplied-universe session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "market_intraday_median",
+    "family": "D",
+    "formula": "cross-sectional median(r)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 1,
+    "scope": "market",
+    "availability": "Latest supplied-universe session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "market_intraday_dispersion",
+    "family": "D",
+    "formula": "cross-sectional population std(r)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 1,
+    "scope": "market",
+    "availability": "Latest supplied-universe session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "market_overnight_median",
+    "family": "D",
+    "formula": "cross-sectional median(q)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 2,
+    "scope": "market",
+    "availability": "Latest supplied-universe session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "market_relative_volume_median",
+    "family": "D",
+    "formula": "cross-sectional median(V/mean(V,20))",
+    "raw_columns": [
+      "price:成交股數"
+    ],
+    "lookback_sessions": 20,
+    "scope": "market",
+    "availability": "Latest supplied-universe session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "market_breadth_5",
+    "family": "D",
+    "formula": "mean(daily market breadth,5)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 5,
+    "scope": "market",
+    "availability": "Latest supplied-universe session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "market_volatility_5",
+    "family": "D",
+    "formula": "population std(daily equal-weight intraday return,5)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 5,
+    "scope": "market",
+    "availability": "Latest supplied-universe session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "market_breadth_20",
+    "family": "D",
+    "formula": "mean(daily market breadth,20)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 20,
+    "scope": "market",
+    "availability": "Latest supplied-universe session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "market_volatility_20",
+    "family": "D",
+    "formula": "population std(daily equal-weight intraday return,20)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 20,
+    "scope": "market",
+    "availability": "Latest supplied-universe session strictly before prediction date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "intraday_vs_peer_median",
+    "family": "D",
+    "formula": "r - cross-sectional median(r)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 1,
+    "scope": "relative",
+    "availability": "Latest same-stock session strictly before prediction date, peers on that source date",
+    "supported": true,
+    "included": true,
+    "overlap": "E3 relative feature agrees when all peers share the same latest session",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "overnight_vs_peer_median",
+    "family": "D",
+    "formula": "q - cross-sectional median(q)",
+    "raw_columns": [
+      "etl:adj_open",
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 2,
+    "scope": "relative",
+    "availability": "Latest same-stock session strictly before prediction date, peers on that source date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "momentum_vs_peer_median_5",
+    "family": "D",
+    "formula": "m_5 - cross-sectional median(m_5)",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 6,
+    "scope": "relative",
+    "availability": "Latest same-stock session strictly before prediction date, peers on that source date",
+    "supported": true,
+    "included": true,
+    "overlap": "E3 relative feature agrees on aligned sessions for n=5",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "momentum_vs_peer_median_20",
+    "family": "D",
+    "formula": "m_20 - cross-sectional median(m_20)",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 21,
+    "scope": "relative",
+    "availability": "Latest same-stock session strictly before prediction date, peers on that source date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "volatility_vs_peer_median_5",
+    "family": "D",
+    "formula": "std(u,5) - cross-sectional median(std(u,5))",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 6,
+    "scope": "relative",
+    "availability": "Latest same-stock session strictly before prediction date, peers on that source date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  },
+  {
+    "name": "volatility_vs_peer_median_20",
+    "family": "D",
+    "formula": "std(u,20) - cross-sectional median(std(u,20))",
+    "raw_columns": [
+      "etl:adj_close"
+    ],
+    "lookback_sessions": 21,
+    "scope": "relative",
+    "availability": "Latest same-stock session strictly before prediction date, peers on that source date",
+    "supported": true,
+    "included": true,
+    "overlap": "none",
+    "origin": "Independent adaptation of requested feature family"
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "purpose": "Verify prior claims after selection, using the archived adjusted-return replay",
+  "competition_server_receipts": "unavailable",
+  "input_sha256": {
+    "members/zhenci/xgboost/diagnostics/e1_e3_gap_outputs/paired_rows.csv": "48381220ea7e6f0f228cce8badb8ead683c666cb1ea13b19d1fab1ef2257cc4f",
+    "members/zhenci/xgboost/diagnostics/e1_e3_gap_outputs/summary.json": "feeac022d3f039258fb2ca9702f57302cb1d1ec310061a12f54e6d254585f71b",
+    "sample_submission.csv": "2081e92b216ff1cd231f0e1ec32d709b6e6b734d9ace41fc7d0b3fe02cc93f28",
+    "members/zhenci/logistic_regression/l1/phase1/export_manifest.json": "fcf2b0d1bcb71429c30ee049243f1a84611a87137be6b4d0cab90d93a0d10ffa",
+    "members/zhenci/logistic_regression/l1/phase1_b/export_manifest.json": "a4768469d4a88b4151c071e2e3776964c621184f6a21d0735178f32752f071ef",
+    "members/zhenci/logistic_regression/l2/phase1/export_manifest.json": "415d1b29cf652a91dab6b3f4c2e1db1771c25934eee2e141052104a0f55dd157",
+    "submissions/zhenci_e1_phase1.csv": "72eb613bca388d9243e40ab912a0e8faaa579b8c362e6b91a4f0ae373fc9369d",
+    "submissions/zhenci_e3_taiex_phase1.csv": "9477505af9c3b4fa3d363e564b1d06e3b2328ea4bd9dc387f928019254b94e6a",
+    "submissions/zhenci_l1_a_exploratory_phase1.csv": "3cc73b75a04cc263e18e86fab448641980726e71671c34b41ccd693bfc830323",
+    "submissions/zhenci_l1_b_exploratory_phase1.csv": "f428a33a46402b5fd18caeb5febd4048a0dc4272c833846cb16503445056bfeb",
+    "submissions/zhenci_l2_b_exploratory_phase1.csv": "20dc3a46881bd9d4bb4d753f2f5740c11566e9c7b44e69816081926e79058e5b"
+  }
+}

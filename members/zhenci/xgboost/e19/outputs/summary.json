@@ -1,0 +1,60 @@
+{
+  "xgboost_version": "3.4.1",
+  "seed": 42,
+  "base_recipe": {
+    "objective": "binary:logistic",
+    "eval_metric": "logloss",
+    "tree_method": "hist",
+    "max_depth": 6,
+    "eta": 0.3,
+    "subsample": 1.0,
+    "colsample_bytree": 1.0,
+    "lambda": 1.0,
+    "alpha": 0.0,
+    "nthread": 4
+  },
+  "decision_rule": {
+    "config_id": "e3_taiex_negative_0525_nonnegative_0475",
+    "negative": 0.525,
+    "nonnegative": 0.475,
+    "missing": 0.5
+  },
+  "primary_fractions_percent": [
+    10,
+    25,
+    50,
+    75,
+    100
+  ],
+  "primary_rounds": [
+    10,
+    25,
+    50,
+    75,
+    100
+  ],
+  "checkpoint_rounding": "half-up and at least one tree",
+  "final_artifact_train_end": "2025-12-31",
+  "input_sha256": {
+    "data\\processed\\f0.csv": "baf60ccab4d772ef23bb46fece2cbb56c98fc5168edc985967f1c45799f21101",
+    "results\\zheng_xgboost_e1_five_seeds_v1\\summary.json": "7a3652ddcf6f429f3e212bfe68b07d9d0359ed3748ab719a96977a11c5cf69ef",
+    "results\\zheng_xgboost_e1_five_seeds_v1\\validation_predictions.csv": "fe255cb3ded917bcdda13440647347b28aaca810858fc31c3255e3e8864accf9",
+    "results\\zhenci_xgboost_e3_market_regime_v2\\summary.json": "24f06993203c719706e1ecb8050f018c023e197cd3efdb4f449a69fc1eeae2a9",
+    "members\\zhenci\\e18\\outputs\\summary.json": "812f0a9b3dc2b1c679fc288eb97e9ed0f59ab8ca9c44790dae01647f3e483e44",
+    "members\\zhenci\\e19\\diagnose_e19.py": "4353b822673ea54e3c8142f70441fcfe2800c08979e160f1e0b19cd9268636e0",
+    "members\\zhenci\\e18\\outputs\\models\\2023\\E3\\preprocessing.json": "7c5b20092c8ca2ae152fbaea62f55259cee03cb576e2b614a2f1cd78ba6916d0",
+    "members\\zhenci\\e18\\outputs\\models\\2023\\E3\\model.json": "e7af1245d3143b9c1b44f629491ea0b42a4cbda5d004800ae30d1d63cb2a6681",
+    "members\\zhenci\\e18\\outputs\\models\\2024\\E3\\preprocessing.json": "429ca45bc2e10d3f8a823b37203263f7499bb34d37e62db9853dfdb0924636a5",
+    "members\\zhenci\\e18\\outputs\\models\\2024\\E3\\model.json": "70b3dc503026253adc955e6899d1348c3f3c0778dab92a329aad3fd4043113a1",
+    "members\\zhenci\\e18\\outputs\\models\\2025\\E3\\preprocessing.json": "00d5e5098511aeceba5fb0199daa119072ac98596566357de79ec9566b0ab214",
+    "members\\zhenci\\e18\\outputs\\models\\2025\\E3\\model.json": "e7a93b476e2255da8022132ea8a4eee8b7a9b2ae19e6de36bfea3c8a9d743114",
+    "results\\zhenci_e1_full_pre_holdout_artifact\\manifest.json": "7abbecfaabee2325c8d75c5f95a6b755f9be316162a9065937a5b5e2e5c28540",
+    "results\\zhenci_e1_full_pre_holdout_artifact\\model.json": "024710177f6b9a4474b3aa842af43f77a2d50132a18b06cace4004227fef6af5",
+    "results\\zhenci_e1_full_pre_holdout_artifact\\preprocessor.json": "6d9cac7ba5b16d8249a9332f1bc309bf3885f037a17b6c8c5997e28d0e57d03e",
+    "results\\zhenci_xgboost_e2_grid_v1\\summary.json": "f4f692a6210d129a3ffe68196fc725e36ef2e8075a1d24aaaf8693728e687359",
+    "results\\zhenci_xgboost_e3_optuna_v1\\summary.json": "472ce69a69a8c8d51f7ffb373b0b810f83b8c86444bf1e3a69ba9b26e51d6e66",
+    "results\\zhenci_xgboost_e3_dart_v1\\summary.json": "4c7e4772402e12b7dec345b86344923975aeb91fec1608ecbf0aa94f46e064c9",
+    "results\\zhenci_xgboost_e6_nested_stop_v1\\summary.json": "8e1b512d335673b0a80f71f6d3bb1b68ed5c3105d222e77c46e9890f2c684691",
+    "results\\zhenci_xgboost_e6_nested_stop_v1\\selected_rounds.csv": "0605d583db895ee237a5ed71a0f4cc709ee7a3ef6b716a7e767006462c97e8b0"
+  }
+}

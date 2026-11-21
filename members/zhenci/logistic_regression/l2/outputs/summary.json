@@ -1,0 +1,83 @@
+{
+  "candidate": "L2-B",
+  "selection_policy": "Positive equal-year difference against the matched L1 rule, at least two winning years, and no deterioration in the worst four-month score. Prefer the higher official mean among eligible arms, with a tie going to L2-A. Report paired uncertainty to qualify the strength of exploratory evidence.",
+  "seed": 42,
+  "params": {
+    "l1_ratio": 0.0,
+    "C": 1.0,
+    "solver": "lbfgs",
+    "max_iter": 1000,
+    "tol": 0.0001,
+    "fit_intercept": true,
+    "class_weight": null,
+    "random_state": 42
+  },
+  "weighting": "abs(adjusted intraday return) divided by its fold-training mean",
+  "preprocessing": "unweighted L1 preprocessing verified against the saved fold states",
+  "thresholds": {
+    "L2-A": 0.5,
+    "L2-B": {
+      "config_id": "e3_taiex_negative_0525_nonnegative_0475",
+      "negative": 0.525,
+      "nonnegative": 0.475,
+      "missing": 0.5
+    }
+  },
+  "features": [
+    "intraday_return_1d",
+    "daily_return_1d",
+    "momentum_5d",
+    "price_range_1d",
+    "relative_volume_20d",
+    "relative_amount_20d",
+    "trade_size_ratio_20d",
+    "foreign_ownership",
+    "foreign_net_buy_ratio",
+    "trust_net_buy_ratio",
+    "rsi_normalized",
+    "sma_distance",
+    "macd_normalized",
+    "atr_normalized",
+    "bb_width",
+    "vix_normalized",
+    "nasdaq_return",
+    "sp500_return",
+    "taiex_return",
+    "stock_id",
+    "day_of_week"
+  ],
+  "versions": {
+    "scikit_learn": "1.9.1",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1"
+  },
+  "bootstrap": {
+    "draws": 3000,
+    "block_days": 5
+  },
+  "input_sha256": {
+    "data/processed/f0.csv": "baf60ccab4d772ef23bb46fece2cbb56c98fc5168edc985967f1c45799f21101",
+    "members/zhenci/logistic_regression/l1/outputs/summary.json": "bd1f010871beb3faa59c7fa1b0dbe5c107b9b4ed66f01b27c0d354ff1e2126b9",
+    "members/zhenci/logistic_regression/l1/outputs/validation_predictions.csv": "3049395a96be39f473d1585f2392db2ec5bf3f12582fbe0df405f09e65d62a08",
+    "members/zhenci/logistic_regression/l1/outputs/fold_metrics.csv": "b784e9b7569496ea1c6a4308bdf23e57ed1968a09c2b35eec4c0e84d2fc0fb0e",
+    "results/zheng_xgboost_e1_five_seeds_v1/validation_predictions.csv": "fe255cb3ded917bcdda13440647347b28aaca810858fc31c3255e3e8864accf9",
+    "results/zheng_xgboost_e1_five_seeds_v1/summary.json": "7a3652ddcf6f429f3e212bfe68b07d9d0359ed3748ab719a96977a11c5cf69ef",
+    "results/zhenci_xgboost_e3_market_regime_v2/summary.json": "24f06993203c719706e1ecb8050f018c023e197cd3efdb4f449a69fc1eeae2a9",
+    "members/zhenci/xgboost/e20/outputs/validation_predictions.csv": "dd3a171b8582d73306310437c8b6673af939f0011e6a2d30fd05c4dd63dd7fda",
+    "members/zhenci/xgboost/diagnostics/previous_day_gap_outputs/paired_rows.csv": "28b49d4a21e04d37cec5a89464c3cea82b685c14e52d33c19370e3072d14ce52",
+    "members/zhenci/xgboost/e17/outputs/validation_predictions.csv": "77a8a78ffa9885b69e086566f5fafac73749b6e4834447983b30edaaad937afb",
+    "members/zhenci/xgboost/e17/outputs/fold_metrics.csv": "df103ce98ceaf7bbc92846d45f11ecf073efee9cd0578e742976f158f64fc54f",
+    "members/zhenci/xgboost/e2/train_e2_weighted.py": "2c79f5a33786b2fa8c625fdde2a899a2f304e828d9e5c01857efcc505ba10d09",
+    "members/zhenci/logistic_regression/l2/diagnostics.py": "d30359b180c3bd79233b58a5e1ceaaae9b66b37b745cf30f06a7320aff7f87a1",
+    "members/zhenci/logistic_regression/l2/report.py": "c80c73494a56e212e29ee8d76956bcaa1f89643b5f4df21335f840dcd52c7a0d",
+    "members/zhenci/logistic_regression/l2/train_l2.py": "5e8cc2f8c000257a5e50f8851148664f9ef0f3d5c072a1755bf8109ef6e9a7ed"
+  },
+  "fold_artifact_sha256": {
+    "models/2023/model.joblib": "5ae0f66750ee40c8b05cb026bf91851a4ff8ba6fc5aa061769eca055066de454",
+    "models/2023/preprocessor.json": "440d79bacb144dd62986672ccd1e07489e02adfc0cfe1c4a0cdea68d3227acb8",
+    "models/2024/model.joblib": "59ebf90dfbbfa32137d043530a1650deca7f6f08cec269c1e8ff6322a1b84ff2",
+    "models/2024/preprocessor.json": "9c2243d86a8a821976c7b3703a9b1b418df3b0f0735087b314b1d60b5f0c0216",
+    "models/2025/model.joblib": "46c72099793b27368705cce6b1a2d8768912d8026a7ab0c3d0bb993e34b0fbcd",
+    "models/2025/preprocessor.json": "abe50c57c0cf20286ef95a45542401193b2e0afd1d7c02e3b969cdc3b73f7578"
+  }
+}

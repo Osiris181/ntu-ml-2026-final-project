@@ -1,0 +1,42 @@
+{
+  "selected_candidate": null,
+  "decision_rule": "Ranked mean > own original and E3; gain in at least two years; paired five-day-block 95% lower bound > 0 versus own original",
+  "complete_dates_only": true,
+  "n_complete_dates": 713,
+  "n_excluded_dates": 11,
+  "input_sha256": {
+    "archived_predictions": "e7972ea6dc085f5e480d306b6c74871c7902deead6fd03bce6b289ff00637d6e",
+    "archived_metrics": "9fb2cded20556186a9903233c5931f9990b3abfd5ab8d33f7c63bbc06eb1148a",
+    "e12_summary": "5d44970e658320cdabf7c68aaa723b9c3924cb254abdf93170e1dcae83d6159b",
+    "e1_summary": "7a3652ddcf6f429f3e212bfe68b07d9d0359ed3748ab719a96977a11c5cf69ef",
+    "e3_summary": "24f06993203c719706e1ecb8050f018c023e197cd3efdb4f449a69fc1eeae2a9",
+    "e14_code": "115e852068d524f251cc657f970b122119d578403d83d76f682e9824480c5e5d",
+    "official_scorer": "ed3bd5971f447686ee4e61a4ea928596887af43d93e422fa373c3eeb0a512a63"
+  },
+  "equal_year_scores": {
+    "e12": 0.0006613534738993872,
+    "e12_rank": 0.0005358154871370724,
+    "e3": 0.0006455514376865599,
+    "e3_rank": 0.00038028842001570207
+  },
+  "candidate_checks": {
+    "e3_rank": {
+      "own_control": "e3",
+      "supporting_years": [],
+      "mean_exceeds_own": false,
+      "mean_exceeds_e3": false,
+      "paired_ci_lower_positive": false,
+      "supported": false
+    },
+    "e12_rank": {
+      "own_control": "e12",
+      "supporting_years": [
+        "2023"
+      ],
+      "mean_exceeds_own": false,
+      "mean_exceeds_e3": false,
+      "paired_ci_lower_positive": false,
+      "supported": false
+    }
+  }
+}

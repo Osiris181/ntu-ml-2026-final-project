@@ -1,0 +1,11 @@
+{
+  "candidate": "L2-B",
+  "artifact": "artifact",
+  "artifact_manifest_sha256": "3818e5c3f9cb300fa5815c4d496d87ce68a7da5520a6d13fe58083dc229ee5a2",
+  "template_sha256": "2081e92b216ff1cd231f0e1ec32d709b6e6b734d9ace41fc7d0b3fe02cc93f28",
+  "inference_f0_sha256": "d3bc8d50b0008de6aca8a0f87036240002056b739d8916cca926a784f47bf88c",
+  "submission": "submissions/zhenci_l2_b_exploratory_phase1.csv",
+  "submission_sha256": "20dc3a46881bd9d4bb4d753f2f5740c11566e9c7b44e69816081926e79058e5b",
+  "predictions": 4200,
+  "predicted_up": 2353
+}

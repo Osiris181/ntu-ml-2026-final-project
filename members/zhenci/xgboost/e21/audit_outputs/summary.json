@@ -1,0 +1,41 @@
+{
+  "recent_start": "2026-01-02",
+  "recent_end": "2026-05-29",
+  "rows": 9500,
+  "days": 95,
+  "stocks": 100,
+  "top50_rows": 4750,
+  "min_stocks_per_day": 100,
+  "max_stocks_per_day": 100,
+  "absent_stock_dates": 0,
+  "finite_positive_adjusted_price_rows": 9500,
+  "label_mismatches": 0,
+  "f0_key_coverage": 1,
+  "numeric_missing": 400,
+  "prefix_rebuild_matches_f0": true,
+  "updates": [
+    {
+      "path": "updated_data_7_Nov/data",
+      "rows": 4500,
+      "stock_count": 100,
+      "start": "2026-09-01",
+      "end": "2026-11-06",
+      "global_rows": 45,
+      "nonpositive_open_close_rows": 100
+    },
+    {
+      "path": "updated_data_17_Nov",
+      "rows": 5600,
+      "stock_count": 100,
+      "start": "2026-09-01",
+      "end": "2026-11-17",
+      "global_rows": 56,
+      "nonpositive_open_close_rows": 500
+    }
+  ],
+  "input_sha256": {
+    "f0": "baf60ccab4d772ef23bb46fece2cbb56c98fc5168edc985967f1c45799f21101",
+    "metadata": "3d95ced2e3fd7e6dc7815a4fb927b8bfe66e89f2390e3c23811d712e0a37fe79",
+    "competition_brief": "e102f4c225193aea2ab9234ede0d2a80d856a093353437898649a5d7dbbf4810"
+  }
+}

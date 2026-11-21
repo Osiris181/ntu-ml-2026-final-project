@@ -1,0 +1,7 @@
+arm,archived_cv_score,reported_phase1_score,locally_replayed_phase1_score,rounded_match,submission
+E1,0.0005814517440399931,-0.00031791,-0.00031790552411405863,True,zhenci_e1_phase1.csv
+E3,0.0006404995381490876,-6.194e-05,-6.194016349195731e-05,True,zhenci_e3_taiex_phase1.csv
+L1-A,0.0004761571267231167,-0.000119,-0.0001194944126460648,True,zhenci_l1_a_exploratory_phase1.csv
+L1-B,0.00048059982813710567,0.000304,0.0003036771499528475,True,zhenci_l1_b_exploratory_phase1.csv
+L2-A,0.0005457919591737387,,,,
+L2-B,0.0005492029394165312,0.000659,0.0006592977308889343,True,zhenci_l2_b_exploratory_phase1.csv
